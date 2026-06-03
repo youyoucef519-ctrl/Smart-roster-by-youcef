@@ -5,103 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Bakery Roster</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
-<!-- supabase loaded dynamically when needed -->
 <style>
 :root{
   --bg:#0c0d0f;--sur:#151618;--sur2:#1c1d20;--brd:#2a2b2f;--brd2:#383a3e;
-  --acc:#f5c842;--grn:#3dba7a;--red:#e05252;--blu:#5b9cf6;--pur:#9b72cf;--org:#e07b3f;
+  --acc:#f5c842;--grn:#3dba7a;--red:#e05252;--blu:#5b9cf6;--pur:#9b72cf;--org:#e07b3f;--cyn:#40c4c4;
   --txt:#edeae3;--mut:#555;--mut2:#888;
   --fh:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--txt);font-family:var(--fb);min-height:100vh;font-size:14px}
-
-/* ── LOGIN ── */
 #loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.login-box{background:var(--sur);border:1px solid var(--brd);border-radius:16px;padding:36px 32px;width:100%;max-width:380px;text-align:center}
-.login-logo{font-family:var(--fh);font-size:2.2rem;font-weight:800;color:var(--acc);margin-bottom:4px}
+.login-box{background:var(--sur);border:1px solid var(--brd);border-radius:16px;padding:36px 28px;width:100%;max-width:380px;text-align:center}
+.login-logo{font-family:var(--fh);font-size:2.4rem;font-weight:800;color:var(--acc);margin-bottom:4px;letter-spacing:-1px}
 .login-logo b{color:var(--txt);font-weight:400}
-.login-sub{color:var(--mut2);font-size:.8rem;margin-bottom:28px}
-.login-tabs{display:flex;background:var(--sur2);border-radius:8px;padding:4px;gap:4px;margin-bottom:24px}
-.ltab{flex:1;padding:9px;border-radius:6px;cursor:pointer;font-family:var(--fh);font-size:.9rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mut2);transition:all .15s;border:none;background:transparent}
+.login-sub{color:var(--mut2);font-size:.78rem;margin-bottom:26px}
+.login-tabs{display:flex;background:var(--sur2);border-radius:8px;padding:3px;gap:3px;margin-bottom:22px}
+.ltab{flex:1;padding:9px;border-radius:6px;cursor:pointer;font-family:var(--fh);font-size:.88rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mut2);border:none;background:transparent;transition:all .15s}
 .ltab.active{background:var(--acc);color:#000}
-.login-field{margin-bottom:14px;text-align:left}
-.login-field label{display:block;font-family:var(--fh);font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mut2);margin-bottom:6px}
-.login-field input,.login-field select{width:100%;background:var(--sur2);border:1px solid var(--brd);color:var(--txt);padding:11px 14px;border-radius:8px;font-family:var(--fb);font-size:.95rem;outline:none;letter-spacing:.5px}
-.login-field input:focus,.login-field select:focus{border-color:var(--acc)}
-.login-field select option{background:#1c1d20}
-.login-btn{width:100%;padding:13px;background:var(--acc);color:#000;border:none;border-radius:8px;font-family:var(--fh);font-size:1.1rem;font-weight:800;letter-spacing:.5px;cursor:pointer;margin-top:6px;transition:all .15s}
-.login-btn:hover{background:#ffd84d}
-.login-err{color:var(--red);font-size:.78rem;margin-top:10px;min-height:20px}
-.setup-notice{background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);border-radius:8px;padding:12px;font-size:.74rem;color:var(--acc);margin-bottom:20px;text-align:left;line-height:1.6}
-
-/* ── TOP NAV ── */
+.lf{margin-bottom:14px;text-align:left}
+.lf label{display:block;font-family:var(--fh);font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--mut2);margin-bottom:5px}
+.lf input,.lf select{width:100%;background:var(--sur2);border:1px solid var(--brd);color:var(--txt);padding:11px 14px;border-radius:8px;font-family:var(--fb);font-size:.92rem;outline:none}
+.lf input:focus,.lf select:focus{border-color:var(--acc)}
+.lf select option{background:#1c1d20}
+.lbtn{width:100%;padding:13px;background:var(--acc);color:#000;border:none;border-radius:8px;font-family:var(--fh);font-size:1.05rem;font-weight:800;cursor:pointer;margin-top:4px;transition:all .15s}
+.lbtn:hover{background:#ffd84d}.lbtn:disabled{opacity:.5;cursor:not-allowed}
+.lerr{color:var(--red);font-size:.75rem;margin-top:10px;min-height:18px}
 #appScreen{display:none}
 nav{display:flex;align-items:center;background:var(--sur);border-bottom:1px solid var(--brd);padding:0 14px;position:sticky;top:0;z-index:200;height:52px;gap:8px}
-.logo{font-family:var(--fh);font-weight:800;font-size:1.15rem;color:var(--acc);letter-spacing:-.5px;white-space:nowrap;flex-shrink:0}
+.logo{font-family:var(--fh);font-weight:800;font-size:1.2rem;color:var(--acc);letter-spacing:-.5px;white-space:nowrap;flex-shrink:0}
 .logo b{color:var(--txt);font-weight:400}
 .nav-r{display:flex;gap:6px;margin-left:auto;align-items:center;flex-shrink:0}
-.user-pill{background:var(--sur2);border:1px solid var(--brd);border-radius:20px;padding:4px 10px;font-size:.68rem;color:var(--mut2);white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
-.user-pill b{color:var(--acc)}
-/* hide old tab styles if any remain */
-.ntabs{display:none!important}
-.nt{display:none!important}
-
-/* ── BOTTOM NAV ── */
-.bottom-nav{
-  position:fixed;bottom:0;left:0;right:0;
-  background:var(--sur);border-top:1px solid var(--brd);
-  display:none;z-index:300;
-  padding-bottom:env(safe-area-inset-bottom);
-}
+.upill{background:var(--sur2);border:1px solid var(--brd);border-radius:20px;padding:4px 10px;font-size:.68rem;color:var(--mut2);white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
+.upill b{color:var(--acc)}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:var(--sur);border-top:1px solid var(--brd);display:none;z-index:300;padding-bottom:env(safe-area-inset-bottom)}
 .bottom-nav.visible{display:flex}
-.bn-item{
-  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;gap:3px;padding:10px 4px 8px;
-  color:var(--mut2);transition:all .15s;border:none;background:transparent;
-  font-family:var(--fh);font-size:.6rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
-}
-.bn-item:hover{color:var(--txt)}
-.bn-item.active{color:var(--acc)}
-.bn-icon{font-size:1.35rem;line-height:1}
-.page{padding-bottom:80px!important}
-@media print{.bottom-nav{display:none!important}}
-
-/* ── PAGES ── */
-.page{display:none;padding:18px 16px;max-width:1700px;margin:0 auto}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:3px;padding:10px 4px 8px;color:var(--mut2);border:none;background:transparent;font-family:var(--fh);font-size:.58rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;transition:all .15s}
+.bni:hover{color:var(--txt)}.bni.active{color:var(--acc)}
+.bni-icon{font-size:1.25rem;line-height:1}
+.page{display:none;padding:18px 16px 80px;max-width:1700px;margin:0 auto}
 .page.active{display:block}
-.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;gap:10px;flex-wrap:wrap}
-.ph-t{font-family:var(--fh);font-size:1.8rem;font-weight:800;line-height:1}
+.ph{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:15px;gap:10px;flex-wrap:wrap}
+.ph-t{font-family:var(--fh);font-size:1.75rem;font-weight:800;line-height:1}
 .ph-t span{color:var(--acc)}
 .ph-s{color:var(--mut2);font-size:.72rem;margin-top:4px}
 .ph-a{display:flex;gap:7px;flex-wrap:wrap;align-items:flex-start}
-
-/* ── BUTTONS ── */
 .btn{display:inline-flex;align-items:center;gap:5px;padding:8px 13px;border:none;border-radius:6px;cursor:pointer;font-family:var(--fb);font-size:.74rem;font-weight:600;transition:all .15s;white-space:nowrap}
+.btn:disabled{opacity:.4;cursor:not-allowed}
 .bp{background:var(--acc);color:#000}.bp:hover{background:#ffd84d}
 .bs{background:var(--sur2);color:var(--txt);border:1px solid var(--brd)}.bs:hover{border-color:var(--acc);color:var(--acc)}
 .bg{background:var(--grn);color:#000}.bg:hover{filter:brightness(1.1)}
 .br{background:var(--red);color:#fff}.br:hover{filter:brightness(1.1)}
 .bgh{background:transparent;color:var(--mut2);border:1px solid var(--brd)}.bgh:hover{color:var(--txt)}
 .bpur{background:var(--pur);color:#fff}.bpur:hover{filter:brightness(1.1)}
+.bcyn{background:var(--cyn);color:#000}.bcyn:hover{filter:brightness(1.1)}
 .bsm{padding:5px 10px;font-size:.7rem}.bxs{padding:3px 8px;font-size:.65rem}
-
-/* ── WEEK BAR ── */
 .wb{display:flex;align-items:center;gap:10px;background:var(--sur);border:1px solid var(--brd);border-radius:8px;padding:8px 13px;margin-bottom:13px;flex-wrap:wrap}
 .wb label{font-family:var(--fh);font-size:.68rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--mut2)}
 .wb input[type=date]{background:var(--sur2);border:1px solid var(--brd);color:var(--txt);padding:5px 9px;border-radius:5px;font-family:var(--fb);font-size:.77rem;outline:none}
 .wb input:focus{border-color:var(--acc)}
 .wbl{font-family:var(--fh);font-size:.92rem;font-weight:700;color:var(--acc)}
-
 .legend{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .leg{display:flex;align-items:center;gap:4px;font-size:.68rem;color:var(--mut2)}
-
-.ab{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.ab{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}
 .ai{display:flex;align-items:center;gap:6px;background:var(--sur);border:1px solid var(--brd);border-radius:6px;padding:5px 10px;font-size:.69rem}
 .adot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .adot.ok{background:var(--grn)}.adot.warn{background:var(--acc)}.adot.low{background:var(--red)}
-
-/* ── DEPT GRID ── */
 .dg{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
 @media(max-width:1200px){.dg{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){.dg{grid-template-columns:1fr}}
@@ -111,59 +79,57 @@ nav{display:flex;align-items:center;background:var(--sur);border-bottom:1px soli
 .ddot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
 .dn{font-family:var(--fh);font-weight:700;font-size:.93rem;letter-spacing:.3px}
 .dbadge{font-size:.59rem;padding:2px 7px;border-radius:20px;background:rgba(245,200,66,.1);color:var(--acc);border:1px solid rgba(245,200,66,.2);font-weight:700}
-
-/* ── ROSTER TABLE ── */
 .rw{overflow-x:auto}
-table.rt{width:100%;border-collapse:collapse;font-size:.69rem}
+table.rt{width:100%;border-collapse:collapse;font-size:.69rem;table-layout:fixed}
 table.rt th{background:var(--sur2);padding:6px 3px;text-align:center;color:var(--mut2);font-weight:700;border-bottom:1px solid var(--brd);white-space:nowrap;font-family:var(--fh);font-size:.72rem;letter-spacing:.3px}
-table.rt th.nc{text-align:left;padding-left:10px;min-width:115px}
-table.rt th.rc{min-width:62px}
+table.rt th.nc{text-align:left;padding-left:10px;width:120px}
+table.rt th.rc{width:65px}
 table.rt td{padding:5px 3px;text-align:center;border-bottom:1px solid rgba(42,43,47,.6);vertical-align:middle}
-table.rt td.nc{text-align:left;padding-left:10px;color:var(--txt);font-size:.7rem}
+table.rt td.nc{text-align:left;padding-left:10px;color:var(--txt);font-size:.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
 table.rt td.rc{color:var(--mut2);font-size:.62rem}
 table.rt tr:hover td{background:rgba(255,255,255,.015)}
 table.rt th.nop{color:var(--mut)!important;opacity:.35}
 table.rt td.nop{opacity:.3}
 .me-row td{background:rgba(245,200,66,.04)!important}
 .me-row td.nc{color:var(--acc)!important;font-weight:600}
-
-.sc{display:inline-flex;align-items:center;justify-content:center;padding:3px 5px;border-radius:4px;font-size:.64rem;font-weight:700;min-width:32px;border:1px solid transparent;user-select:none}
-.sc.editable{cursor:pointer;transition:opacity .12s}.sc.editable:hover{opacity:.72}
-.s-IN  {background:rgba(61,186,122,.18);color:#4ddd96;border-color:rgba(61,186,122,.32)}
+.cover-row td.nc{color:var(--cyn)!important}
+.sc{display:inline-flex;align-items:center;justify-content:center;padding:3px 4px;border-radius:4px;font-size:.63rem;font-weight:700;min-width:30px;border:1px solid transparent;user-select:none}
+.sc.ed{cursor:pointer;transition:opacity .12s}.sc.ed:hover{opacity:.72}
+.s-IN{background:rgba(61,186,122,.18);color:#4ddd96;border-color:rgba(61,186,122,.32)}
 .s-inSH{background:rgba(245,200,66,.2);color:#f5c842;border-color:rgba(245,200,66,.38)}
-.s-inE {background:rgba(91,156,246,.18);color:#7eb8ff;border-color:rgba(91,156,246,.32)}
-.s-InL {background:rgba(64,196,196,.18);color:#40c4c4;border-color:rgba(64,196,196,.32)}
-.s-dp  {background:rgba(224,123,63,.18);color:#f0a060;border-color:rgba(224,123,63,.32)}
-.s-HOL {background:rgba(155,114,207,.2);color:#c0a0f0;border-color:rgba(155,114,207,.32)}
+.s-inE{background:rgba(91,156,246,.18);color:#7eb8ff;border-color:rgba(91,156,246,.32)}
+.s-InL{background:rgba(64,196,196,.18);color:#40c4c4;border-color:rgba(64,196,196,.32)}
+.s-dp{background:rgba(224,123,63,.18);color:#f0a060;border-color:rgba(224,123,63,.32)}
+.s-HOL{background:rgba(155,114,207,.2);color:#c0a0f0;border-color:rgba(155,114,207,.32)}
 .s-HALF{background:rgba(224,123,63,.12);color:#f0a060;border-color:rgba(224,123,63,.22)}
 .s-INTR{background:rgba(100,100,150,.22);color:#aab;border-color:rgba(100,100,150,.38)}
-.s-OFF {background:rgba(44,44,50,.45);color:#555;border-color:rgba(44,44,50,.6)}
-.s-NA  {background:rgba(30,30,32,.4);color:#2a2a2a;border-color:rgba(30,30,32,.5);cursor:default}
-.fixed-dot{width:5px;height:5px;border-radius:50%;background:var(--pur);display:inline-block;margin-left:4px;vertical-align:middle}
-
+.s-OFF{background:rgba(44,44,50,.45);color:#555;border-color:rgba(44,44,50,.6)}
+.s-NA{background:rgba(30,30,32,.4);color:#2a2a2a;border-color:rgba(30,30,32,.5);cursor:default}
+.fx-dot{width:5px;height:5px;border-radius:50%;background:var(--pur);display:inline-block;margin-left:4px;vertical-align:middle}
+.cv-dot{width:5px;height:5px;border-radius:50%;background:var(--cyn);display:inline-block;margin-left:4px;vertical-align:middle}
 tr.tot td{font-family:var(--fh);font-weight:700;font-size:.8rem;padding:7px 3px;border-top:2px solid var(--brd);background:var(--sur2)}
 .c-ok{color:var(--grn)}.c-warn{color:var(--acc)}.c-low{color:var(--red)}.c-na{color:var(--mut)}
-
-/* ── STAFF MY ROSTER ── */
 .my-week{background:var(--sur);border:1px solid var(--brd);border-radius:12px;overflow:hidden;margin-bottom:16px}
-.my-hdr{padding:16px 18px;border-bottom:1px solid var(--brd);display:flex;align-items:center;gap:12px}
-.my-av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:1.1rem;flex-shrink:0}
-.my-name{font-family:var(--fh);font-size:1.2rem;font-weight:700}
-.my-meta{font-size:.7rem;color:var(--mut2);margin-top:3px}
+.my-hdr{padding:14px 16px;border-bottom:1px solid var(--brd);display:flex;align-items:center;gap:11px}
+.my-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:1rem;flex-shrink:0}
+.my-name{font-family:var(--fh);font-size:1.1rem;font-weight:700}
+.my-meta{font-size:.68rem;color:var(--mut2);margin-top:2px}
 .my-days{display:grid;grid-template-columns:repeat(7,1fr)}
-.my-day{padding:14px 6px;text-align:center;border-right:1px solid var(--brd)}
+.my-day{padding:12px 5px;text-align:center;border-right:1px solid var(--brd)}
 .my-day:last-child{border-right:none}
-.my-dn{font-family:var(--fh);font-size:.72rem;font-weight:700;color:var(--mut2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
-.my-dd{font-size:.6rem;color:var(--mut);margin-bottom:9px}
-.my-ds{display:inline-flex;align-items:center;justify-content:center;padding:6px 8px;border-radius:8px;font-size:.8rem;font-weight:800;min-width:44px;border:1px solid transparent}
+.my-dn{font-family:var(--fh);font-size:.7rem;font-weight:700;color:var(--mut2);letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
+.my-dd{font-size:.58rem;color:var(--mut);margin-bottom:8px}
+.my-ds{display:inline-flex;align-items:center;justify-content:center;padding:5px 7px;border-radius:7px;font-size:.77rem;font-weight:800;min-width:40px;border:1px solid transparent}
 .my-day.today{background:rgba(245,200,66,.05);border-bottom:3px solid var(--acc)}
 .my-day.today .my-dn{color:var(--acc)}
-@media(max-width:500px){.my-days{grid-template-columns:repeat(4,1fr)}.my-day:nth-child(4){border-right:none}.my-day:nth-child(n+5){border-top:1px solid var(--brd)}}
-
-/* ── MODAL ── */
+@media(max-width:480px){.my-days{grid-template-columns:repeat(4,1fr)}.my-day:nth-child(4){border-right:none}.my-day:nth-child(n+5){border-top:1px solid var(--brd)}}
+.hol-balance{background:var(--sur2);border:1px solid var(--brd);border-radius:10px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.hol-bal-item{text-align:center}
+.hol-bal-num{font-family:var(--fh);font-size:1.6rem;font-weight:800;line-height:1}
+.hol-bal-lbl{font-size:.65rem;color:var(--mut2);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
 .mov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.84);z-index:500;align-items:center;justify-content:center;padding:16px}
 .mov.open{display:flex}
-.modal{background:var(--sur);border:1px solid var(--brd);border-radius:12px;padding:22px;width:100%;max-width:420px;max-height:92vh;overflow-y:auto}
+.modal{background:var(--sur);border:1px solid var(--brd);border-radius:12px;padding:22px;width:100%;max-width:460px;max-height:92vh;overflow-y:auto}
 .modal h3{font-family:var(--fh);font-size:1.2rem;font-weight:800;margin-bottom:13px;color:var(--acc)}
 .minfo{color:var(--mut2);font-size:.71rem;margin-bottom:11px;padding:8px 11px;background:var(--sur2);border-radius:5px;line-height:1.6}
 .fg{margin-bottom:12px}
@@ -175,21 +141,28 @@ tr.tot td{font-family:var(--fh);font-weight:700;font-size:.8rem;padding:7px 3px;
 .sp{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:5px}
 .spo{padding:7px 4px;border-radius:6px;cursor:pointer;font-size:.7rem;font-weight:700;text-align:center;border:1px solid var(--brd);transition:all .13s;background:var(--sur2);color:var(--mut2)}
 .spo:hover{border-color:var(--acc);color:var(--acc)}.spo.sel{background:var(--acc);color:#000;border-color:var(--acc)}
-
-/* FIXED DAYS */
-.staff-scroll{max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin-top:6px}
-.sli{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--sur2);border-radius:6px;border:1px solid var(--brd);gap:8px}
-.sli-l{display:flex;flex-direction:column}
-.sli-name{font-size:.76rem;font-weight:600;color:var(--txt)}
-.sli-meta{font-size:.61rem;color:var(--mut2);margin-top:1px}
+.staff-scroll{max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;margin-top:6px}
+.sli{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:var(--sur2);border-radius:6px;border:1px solid var(--brd);gap:8px;flex-wrap:wrap}
+.sli-l{display:flex;flex-direction:column;min-width:100px}
+.sli-name{font-size:.75rem;font-weight:600;color:var(--txt)}
+.sli-meta{font-size:.6rem;color:var(--mut2);margin-top:1px}
 .day-btns{display:flex;gap:3px;flex-wrap:wrap}
-.dbt{padding:4px 7px;border-radius:5px;cursor:pointer;font-size:.68rem;font-weight:700;border:1px solid var(--brd);background:var(--sur);color:var(--mut2);transition:all .12s;font-family:var(--fh)}
+.dbt{padding:4px 7px;border-radius:5px;cursor:pointer;font-size:.67rem;font-weight:700;border:1px solid var(--brd);background:var(--sur);color:var(--mut2);transition:all .12s;font-family:var(--fh)}
 .dbt:hover{border-color:var(--pur);color:var(--pur)}.dbt.sel{background:var(--pur);color:#fff;border-color:var(--pur)}.dbt.dis{opacity:.3;pointer-events:none}
 .df{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
 .dfb{padding:4px 9px;border-radius:5px;cursor:pointer;font-size:.67rem;font-weight:700;border:1px solid var(--brd);background:var(--sur2);color:var(--mut2);transition:all .12s;font-family:var(--fh);text-transform:uppercase;letter-spacing:.4px}
 .dfb:hover{border-color:var(--acc);color:var(--acc)}.dfb.active{background:var(--acc);color:#000;border-color:var(--acc)}
-
-/* HOLIDAYS */
+.flex-item{display:flex;align-items:flex-start;justify-content:space-between;padding:10px 12px;background:var(--sur2);border-radius:6px;border:1px solid var(--brd);gap:10px;flex-wrap:wrap;margin-bottom:5px}
+.flex-name{font-size:.78rem;font-weight:600;color:var(--txt)}
+.flex-dept{font-size:.65rem;color:var(--mut2);margin-top:2px}
+.flex-cover{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.dept-btn{padding:3px 8px;border-radius:4px;cursor:pointer;font-size:.64rem;font-weight:700;border:1px solid var(--brd);background:var(--sur);color:var(--mut2);transition:all .12px;font-family:var(--fh)}
+.dept-btn:hover{border-color:var(--cyn);color:var(--cyn)}.dept-btn.sel{background:var(--cyn);color:#000;border-color:var(--cyn)}
+.flex-toggle{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--mut2);cursor:pointer;flex-shrink:0}
+.toggle-sw{width:34px;height:18px;background:var(--brd2);border-radius:9px;position:relative;transition:background .2s;flex-shrink:0}
+.toggle-sw.on{background:var(--cyn)}
+.toggle-sw::after{content:'';position:absolute;width:14px;height:14px;background:#fff;border-radius:50%;top:2px;left:2px;transition:left .2s}
+.toggle-sw.on::after{left:18px}
 .hg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:680px){.hg{grid-template-columns:1fr}}
 .card{background:var(--sur);border:1px solid var(--brd);border-radius:10px;padding:16px}
@@ -202,8 +175,6 @@ tr.tot td{font-family:var(--fh);font-weight:700;font-size:.8rem;padding:7px 3px;
 .pill{padding:2px 8px;border-radius:20px;font-size:.58rem;font-weight:800;letter-spacing:.3px;text-transform:uppercase}
 .pp{background:rgba(245,200,66,.14);color:var(--acc)}.pa{background:rgba(61,186,122,.14);color:var(--grn)}
 .empty{text-align:center;padding:22px;color:var(--mut);font-size:.74rem}
-
-/* STAFF TABLE */
 .sw{background:var(--sur);border:1px solid var(--brd);border-radius:10px;overflow:hidden}
 table.st{width:100%;border-collapse:collapse;font-size:.74rem}
 table.st th{padding:9px 12px;text-align:left;background:var(--sur2);color:var(--mut2);font-weight:700;text-transform:uppercase;font-size:.6rem;letter-spacing:.5px;border-bottom:1px solid var(--brd)}
@@ -214,41 +185,37 @@ table.st tr:hover td{background:rgba(255,255,255,.015)}
 .r-CH{background:rgba(245,200,66,.14);color:var(--acc)}.r-MO{background:rgba(91,156,246,.14);color:var(--blu)}
 .r-MX{background:rgba(155,114,207,.14);color:var(--pur)}.r-SM{background:rgba(224,123,63,.14);color:var(--org)}
 .r-ST{background:rgba(61,186,122,.1);color:var(--grn)}
-.pin-badge{font-family:var(--fh);font-size:.8rem;font-weight:700;color:var(--acc);letter-spacing:1px}
-
-/* SETUP SCREEN */
-#setupScreen{display:none;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.setup-box{background:var(--sur);border:1px solid var(--brd);border-radius:16px;padding:32px;width:100%;max-width:460px}
-.setup-box h2{font-family:var(--fh);font-size:1.6rem;font-weight:800;color:var(--acc);margin-bottom:6px}
-.setup-box p{color:var(--mut2);font-size:.78rem;margin-bottom:22px;line-height:1.6}
-.setup-step{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px;padding:12px;background:var(--sur2);border-radius:8px}
-.step-num{width:26px;height:26px;border-radius:50%;background:var(--acc);color:#000;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-weight:800;font-size:.85rem;flex-shrink:0}
-.step-text{font-size:.77rem;color:var(--txt);line-height:1.6}
-.step-text b{color:var(--acc)}
-.step-text code{background:var(--sur);border:1px solid var(--brd);padding:1px 6px;border-radius:4px;font-size:.72rem;color:var(--cyn,#40c4c4)}
-
-/* PRINT */
+.pin-badge{font-family:var(--fh);font-size:.82rem;font-weight:700;color:var(--acc);letter-spacing:1px}
+.hol-bar{display:flex;align-items:center;gap:6px}
+.hol-track{width:60px;height:5px;background:var(--brd2);border-radius:3px;overflow:hidden}
+.hol-fill{height:100%;border-radius:3px;background:var(--grn);transition:width .3s}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid var(--brd2);border-top-color:var(--acc);border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:5px}
+@keyframes sp{to{transform:rotate(360deg)}}
 @media print{
-  @page{size:A4 landscape;margin:7mm}
+  @page{size:A4 landscape;margin:5mm}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  #loginScreen,#setupScreen,nav,.wb,.ab,.legend,.ph-a,.ph-s,
-  #page-myroster,#page-holidays,#page-staff,.mov{display:none!important}
+  #loginScreen,.bottom-nav,nav,.wb,.ab,.legend,.ph-a,.ph-s,
+  #page-holidays,#page-staff,#page-settings,.mov,.my-week,.hol-balance{display:none!important}
   body{background:#fff!important;color:#000!important}
-  .page{display:none!important;padding:0!important}
-  #page-roster{display:block!important;padding:0!important;max-width:100%!important}
-  .print-head{display:flex!important;align-items:baseline;gap:8mm;margin-bottom:3mm;border-bottom:1.5pt solid #888;padding-bottom:2mm}
-  .pco{font-family:'Barlow Condensed',sans-serif;font-size:15pt;font-weight:800;color:#000}
-  .pwk{font-size:9pt;color:#555}
-  .dg{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:3mm!important}
-  .dc{border:1pt solid #999!important;border-radius:2pt!important;page-break-inside:avoid;break-inside:avoid;background:#fff!important}
-  .dh{background:#f0f0f0!important;padding:2.5pt 5pt!important;border-bottom:1pt solid #bbb!important}
-  .dn{font-size:7pt!important;color:#000!important;font-weight:800!important}
-  .dbadge{display:none!important}
-  .ddot{display:none!important}
-  table.rt th{background:#ebebeb!important;color:#444!important;font-size:5.5pt!important;padding:2pt!important;border-bottom:1pt solid #ccc!important}
-  table.rt td{padding:1.8pt 2pt!important;font-size:5.5pt!important;border-bottom:.4pt solid #e0e0e0!important}
-  table.rt td.nc{color:#000!important;font-size:5.5pt!important}
-  .sc{font-size:5pt!important;padding:1.2pt 2.5pt!important;min-width:20pt!important;font-weight:700!important}
+  .page{display:none!important;padding:0!important;max-width:100%!important}
+  #page-roster{display:block!important;padding:0!important}
+  .print-head{display:flex!important;align-items:baseline;gap:6mm;margin-bottom:2mm;border-bottom:1pt solid #999;padding-bottom:1.5mm}
+  .pco{font-family:'Barlow Condensed',sans-serif;font-size:14pt;font-weight:800;color:#000}
+  .pwk{font-size:8pt;color:#555}
+  .ph{margin-bottom:2mm!important}.ph-t{display:none}
+  .dg{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:2.5mm!important}
+  .dc{border:1pt solid #999!important;border-radius:1pt!important;page-break-inside:avoid!important;break-inside:avoid!important;background:#fff!important;overflow:visible!important}
+  .dh{background:#f0f0f0!important;padding:2pt 4pt!important;border-bottom:1pt solid #bbb!important}
+  .dn{font-size:6.5pt!important;color:#000!important;font-weight:800!important}
+  .dbadge{display:none!important}.ddot{display:none!important}.fx-dot{display:none!important}.cv-dot{display:none!important}
+  .rw{overflow:visible!important}
+  table.rt{table-layout:fixed!important;width:100%!important}
+  table.rt th{background:#ebebeb!important;color:#444!important;font-size:5pt!important;padding:1.5pt 1pt!important;border-bottom:1pt solid #ccc!important;white-space:nowrap!important}
+  table.rt th.nc{width:22%!important;text-align:left!important;padding-left:3pt!important}
+  table.rt th.rc{width:12%!important}
+  table.rt td{padding:1.5pt 1pt!important;font-size:5pt!important;border-bottom:.3pt solid #e5e5e5!important}
+  table.rt td.nc{color:#000!important;font-size:5pt!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;padding-left:3pt!important}
+  .sc{font-size:4.5pt!important;padding:1pt 2pt!important;border-radius:1pt!important;font-weight:700!important;min-width:0!important;display:inline-block!important}
   .s-IN{background:#d5f5e5!important;color:#155c30!important;border-color:#a0dab8!important}
   .s-inSH{background:#fff8cc!important;color:#7a5c00!important;border-color:#e0c830!important}
   .s-inE{background:#d5e8ff!important;color:#1a3a7a!important;border-color:#a0c0f0!important}
@@ -259,272 +226,203 @@ table.st tr:hover td{background:rgba(255,255,255,.015)}
   .s-INTR{background:#e5e5f5!important;color:#333355!important;border-color:#a8a8cc!important}
   .s-OFF{background:#f0f0f0!important;color:#888!important;border-color:#ccc!important}
   .s-NA{background:#fafafa!important;color:#ddd!important;border-color:#eee!important}
-  tr.tot td{background:#ebebeb!important;font-size:6pt!important;color:#000!important;border-top:1.5pt solid #999!important;padding:2pt!important}
+  tr.tot td{background:#ebebeb!important;font-size:5.5pt!important;color:#000!important;border-top:1pt solid #999!important;padding:1.5pt 1pt!important}
   .c-ok{color:#155c30!important}.c-warn{color:#7a5c00!important}.c-low{color:#c00!important}.c-na{color:#aaa!important}
-  .rt2{font-size:4.5pt!important;padding:1pt 3pt!important}
-  .me-row td{background:#fff!important}.me-row td.nc{color:#000!important;font-weight:700!important}
-  .fixed-dot{display:none!important}
+  .cover-row td.nc{color:#000!important}
 }
 .print-head{display:none}
-
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--sur)}
 ::-webkit-scrollbar-thumb{background:var(--brd2);border-radius:3px}
-
-.loading{display:flex;align-items:center;justify-content:center;padding:40px;color:var(--mut2);font-size:.8rem;gap:10px}
-.spin{width:18px;height:18px;border:2px solid var(--brd2);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
-
-<!-- ══ SETUP SCREEN (shown when Supabase not configured) ══ -->
-<div id="setupScreen">
-  <div class="setup-box">
-    <h2>⚙️ Setup Required</h2>
-    <p>To make this roster work online for all staff, you need to connect it to a free Supabase database. Follow these steps:</p>
-    <div class="setup-step"><div class="step-num">1</div><div class="step-text">Go to <b>supabase.com</b> and create a free account, then create a new project called <b>bakery-roster</b></div></div>
-    <div class="setup-step"><div class="step-num">2</div><div class="step-text">Go to <b>Settings → API</b> and copy your <b>Project URL</b> and <b>anon public key</b></div></div>
-    <div class="setup-step"><div class="step-num">3</div><div class="step-text">Go to <b>SQL Editor</b> in Supabase and run the setup SQL that came with this file</div></div>
-    <div class="setup-step"><div class="step-num">4</div><div class="step-text">Open this HTML file in a text editor, find <code>SUPABASE_URL</code> and <code>SUPABASE_KEY</code> near the top of the script and replace with your values</div></div>
-    <button class="btn bp" style="width:100%;margin-top:8px;padding:12px;font-size:.9rem" onclick="document.getElementById('setupScreen').style.display='none';document.getElementById('loginScreen').style.display='flex'">I've done this — continue anyway</button>
-  </div>
-</div>
-
-<!-- ══ LOGIN SCREEN ══ -->
-<div id="loginScreen" style="display:none">
+<div id="loginScreen">
   <div class="login-box">
     <div class="login-logo">BAKERY<b>OS</b></div>
-    <div class="login-sub">Roster Management System</div>
+    <div class="login-sub">Staff Roster System</div>
     <div class="login-tabs">
-      <button class="ltab active" onclick="switchLoginTab('staff',this)">Staff</button>
-      <button class="ltab" onclick="switchLoginTab('manager',this)">Manager</button>
+      <button class="ltab active" onclick="switchTab('staff',this)">Staff</button>
+      <button class="ltab" onclick="switchTab('manager',this)">Manager</button>
     </div>
-
-    <!-- STAFF LOGIN -->
     <div id="staffLogin">
-      <div class="login-field">
-        <label>Your Name</label>
-        <select id="staffNameSel">
-          <option value="">— select your name —</option>
-        </select>
-      </div>
-      <div class="login-field">
-        <label>Your PIN</label>
-        <input type="password" id="staffPin" placeholder="Enter your PIN" maxlength="6" inputmode="numeric">
-      </div>
-      <button class="login-btn" onclick="staffLogin()">View My Roster</button>
+      <div class="lf"><label>Your Name</label><select id="staffNameSel"><option value="">— select your name —</option></select></div>
+      <div class="lf"><label>Your PIN</label><input type="password" id="staffPin" placeholder="4-digit PIN" maxlength="6" inputmode="numeric"></div>
+      <button class="lbtn" id="staffLoginBtn" onclick="staffLogin()">View My Roster</button>
     </div>
-
-    <!-- MANAGER LOGIN -->
     <div id="managerLogin" style="display:none">
-      <div class="login-field">
-        <label>Manager Password</label>
-        <input type="password" id="mgrPass" placeholder="Enter password">
-      </div>
-      <button class="login-btn" onclick="managerLogin()">Manager Login</button>
+      <div class="lf"><label>Email</label><input type="email" id="mgrEmail" placeholder="manager@email.com"></div>
+      <div class="lf"><label>Password</label><input type="password" id="mgrPass" placeholder="Password"></div>
+      <button class="lbtn" id="mgrLoginBtn" onclick="managerLogin()">Manager Login</button>
     </div>
-
-    <div class="login-err" id="loginErr"></div>
+    <div class="lerr" id="loginErr"></div>
   </div>
 </div>
-
-<!-- ══ APP SCREEN ══ -->
 <div id="appScreen">
 <nav>
   <div class="logo">BAKERY<b>OS</b></div>
   <div class="nav-r">
-    <div class="user-pill" id="userPill"></div>
-    <button class="btn bgh bsm" onclick="doPrint()" id="printBtn" style="display:none">🖨</button>
+    <div class="upill" id="userPill"></div>
+    <button class="btn bgh bsm" onclick="doPrint()" id="printBtn" style="display:none">&#128424;</button>
     <button class="btn br bxs" onclick="logout()">Exit</button>
   </div>
 </nav>
-
-<!-- BOTTOM NAV -->
 <div class="bottom-nav" id="bottomNav">
-  <button class="bn-item active" id="bnRoster" onclick="showPage('roster',this,'bnRoster')">
-    <div class="bn-icon">📋</div><div>Roster</div>
-  </button>
-  <button class="bn-item" id="bnHolidays" onclick="showPage('holidays',this,'bnHolidays')">
-    <div class="bn-icon">🌴</div><div>Holidays</div>
-  </button>
-  <button class="bn-item" id="bnStaff" onclick="showPage('staff',this,'bnStaff')" style="display:none">
-    <div class="bn-icon">👥</div><div>Staff</div>
-  </button>
+  <button class="bni active" id="bnRoster" onclick="showPage('roster',this)"><div class="bni-icon">&#128203;</div><div>Roster</div></button>
+  <button class="bni" id="bnHolidays" onclick="showPage('holidays',this)"><div class="bni-icon">&#127796;</div><div>Holidays</div></button>
+  <button class="bni" id="bnStaff" onclick="showPage('staff',this)" style="display:none"><div class="bni-icon">&#128101;</div><div>Staff</div></button>
+  <button class="bni" id="bnSettings" onclick="showPage('settings',this)" style="display:none"><div class="bni-icon">&#9881;&#65039;</div><div>Settings</div></button>
 </div>
-
-<!-- ROSTER PAGE -->
 <div id="page-roster" class="page active">
-  <div class="print-head">
-    <div class="pco">BAKERY WEEKLY ROSTER</div>
-    <div class="pwk" id="printWk"></div>
-  </div>
+  <div class="print-head"><div class="pco">BAKERY WEEKLY ROSTER</div><div class="pwk" id="printWk"></div></div>
   <div class="ph">
-    <div>
-      <div class="ph-t">Weekly <span>Roster</span></div>
-      <div class="ph-s" id="rosterSub">View only</div>
-    </div>
+    <div><div class="ph-t">Weekly <span>Roster</span></div><div class="ph-s" id="rosterSub"></div></div>
     <div class="ph-a" id="mgrActions" style="display:none">
-      <button class="btn bpur" onclick="openFixedMod()">🟣 Fixed Days</button>
-      <button class="btn bgh" onclick="openAutoMod()">⚡ Auto-Generate</button>
-      <button class="btn bs" onclick="doPrint()">🖨 Print</button>
-      <button class="btn bp" onclick="saveAll()">💾 Save</button>
+      <button class="btn bpur" onclick="openFixedMod()">Fixed Days</button>
+      <button class="btn bgh" onclick="openAutoMod()">Auto-Generate</button>
+      <button class="btn bs" onclick="doPrint()">Print</button>
+      <button class="btn bp" onclick="saveAll()">Save</button>
     </div>
   </div>
   <div class="wb">
     <label>Week:</label>
     <input type="date" id="wkInput" onchange="buildRoster()">
     <div class="wbl" id="wkLabel"></div>
-    <button class="btn bgh bsm" onclick="changeWeek(-7)">← Prev</button>
-    <button class="btn bgh bsm" onclick="changeWeek(7)">Next →</button>
+    <button class="btn bgh bsm" onclick="changeWeek(-7)">Prev</button>
+    <button class="btn bgh bsm" onclick="changeWeek(7)">Next</button>
   </div>
   <div class="legend">
-    <div class="leg"><span class="sc s-IN">in</span> Day</div>
-    <div class="leg"><span class="sc s-inSH">inSH</span> Shift Mgr</div>
-    <div class="leg"><span class="sc s-inE">inE</span> Early</div>
-    <div class="leg"><span class="sc s-InL">InL</span> Late</div>
-    <div class="leg"><span class="sc s-dp">dp</span> Day Plant</div>
-    <div class="leg"><span class="sc s-HALF">½day</span> Half</div>
-    <div class="leg"><span class="sc s-INTR">intr</span> Training</div>
-    <div class="leg"><span class="sc s-HOL">HOL</span> Holiday</div>
-    <div class="leg"><span class="sc s-OFF">off</span> Off</div>
-    <div class="leg"><span class="sc s-NA">—</span> No prod</div>
+    <div class="leg"><span class="sc s-IN">in</span>Day</div>
+    <div class="leg"><span class="sc s-inSH">inSH</span>Mgr</div>
+    <div class="leg"><span class="sc s-inE">inE</span>Early</div>
+    <div class="leg"><span class="sc s-InL">InL</span>Late</div>
+    <div class="leg"><span class="sc s-dp">dp</span>Plant</div>
+    <div class="leg"><span class="sc s-HALF">half</span>Half</div>
+    <div class="leg"><span class="sc s-HOL">HOL</span>Hol</div>
+    <div class="leg"><span class="sc s-OFF">off</span>Off</div>
+    <div class="leg"><span class="sc s-NA">NA</span>No prod</div>
+    <div class="leg"><span style="width:7px;height:7px;border-radius:50%;background:var(--cyn);display:inline-block"></span>Cover</div>
   </div>
   <div class="ab" id="alertBar"></div>
   <div id="staffMyWeek"></div>
   <div class="dg" id="deptGrid"></div>
 </div>
-
-<!-- HOLIDAYS PAGE -->
 <div id="page-holidays" class="page">
   <div class="ph">
-    <div><div class="ph-t">Holiday <span>Bookings</span></div>
-    <div class="ph-s">5 days per person · Submit a request below</div></div>
-    <button class="btn bp" onclick="openHolMod()">+ Request Holiday</button>
+    <div><div class="ph-t">Holiday <span>Bookings</span></div><div class="ph-s">Submit and track requests</div></div>
+    <button class="btn bp" onclick="openHolMod()">+ Request</button>
   </div>
+  <div id="myHolBalance"></div>
   <div class="hg">
-    <div class="card"><div class="ct">⏳ Pending</div><div class="hl" id="pendingList"></div></div>
-    <div class="card"><div class="ct">✅ Approved</div><div class="hl" id="approvedList"></div></div>
+    <div class="card"><div class="ct">Pending</div><div class="hl" id="pendingList"></div></div>
+    <div class="card"><div class="ct">Approved</div><div class="hl" id="approvedList"></div></div>
   </div>
 </div>
-
-<!-- STAFF PAGE (manager only) -->
 <div id="page-staff" class="page">
   <div class="ph">
-    <div><div class="ph-t">Staff <span>Directory</span></div>
-    <div class="ph-s">PIN list — share each PIN privately with the staff member</div></div>
+    <div><div class="ph-t">Staff <span>Directory</span></div><div class="ph-s">Manage staff, PINs and holiday allowances</div></div>
     <button class="btn bp" onclick="openStaffMod()">+ Add Staff</button>
   </div>
   <div class="sw">
     <table class="st">
-      <thead><tr><th>#</th><th>Name</th><th>Role</th><th>Department</th><th>PIN</th><th>Fixed Days Off</th><th>Holiday Left</th><th></th></tr></thead>
+      <thead><tr><th>#</th><th>Name</th><th>Role</th><th>Dept</th><th>PIN</th><th>Holiday Balance</th><th>Fixed Days</th><th></th></tr></thead>
       <tbody id="staffTbody"></tbody>
     </table>
   </div>
 </div>
-</div><!-- end appScreen -->
-
-<!-- SHIFT MODAL -->
-<div class="mov" id="shiftMod">
-  <div class="modal">
-    <h3>Edit Shift</h3>
-    <div class="minfo" id="shiftInfo"></div>
-    <div class="fg"><label>Choose shift</label>
-      <div class="sp" id="shiftPicker"></div>
-    </div>
-    <div class="mac">
-      <button class="btn bp" onclick="applyShift()">Apply</button>
-      <button class="btn bs" onclick="closeMod('shiftMod')">Cancel</button>
-    </div>
+<div id="page-settings" class="page">
+  <div class="ph"><div><div class="ph-t">Settings</div><div class="ph-s">Flex staff, bank holidays, allowances</div></div></div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="ct">Flex Staff - Cover Departments</div>
+    <div class="minfo">Flex staff can cover other depts when short. They appear only in their primary dept. Hidden from staff view.</div>
+    <div id="flexStaffList"></div>
+    <button class="btn bp" style="margin-top:12px" onclick="saveFlexSettings()">Save Flex Settings</button>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="ct">Add Bank Holiday Hours</div>
+    <div class="minfo">Add paid bank holiday hours to staff members.</div>
+    <div class="fg"><label>Staff Member</label><select id="bhStaff"><option value="all">All Staff</option></select></div>
+    <div class="fg"><label>Hours to add</label><input type="number" id="bhHours" value="8" min="1" max="24"></div>
+    <button class="btn bp" onclick="addBankHoliday()">+ Add Hours</button>
+  </div>
+  <div class="card">
+    <div class="ct">Edit Holiday Allowance</div>
+    <div class="minfo">Change total annual holiday hours for a staff member.</div>
+    <div class="fg"><label>Staff Member</label><select id="haStaff"></select></div>
+    <div class="fg"><label>Total Hours (160 = 20 days x 8hrs)</label><input type="number" id="haHours" value="160" min="0" max="400"></div>
+    <button class="btn bp" onclick="updateAllowance()">Update Allowance</button>
   </div>
 </div>
-
-<!-- FIXED DAYS MODAL -->
+</div>
+<div class="mov" id="shiftMod">
+  <div class="modal"><h3>Edit Shift</h3>
+    <div class="minfo" id="shiftInfo"></div>
+    <div class="fg"><label>Choose shift</label><div class="sp" id="shiftPicker"></div></div>
+    <div class="mac"><button class="btn bp" onclick="applyShift()">Apply</button><button class="btn bs" onclick="closeMod('shiftMod')">Cancel</button></div>
+  </div>
+</div>
 <div class="mov" id="fixedMod">
-  <div class="modal" style="max-width:500px">
-    <h3>🟣 Fixed Days Off</h3>
-    <div class="minfo">Tap day buttons to toggle fixed days off per staff member. These are <b>never changed</b> by auto-generate.</div>
+  <div class="modal" style="max-width:520px"><h3>Fixed Days Off</h3>
+    <div class="minfo">Tap day buttons to toggle. Never changed by auto-generate.</div>
     <div class="df" id="deptFilter"></div>
     <div class="staff-scroll" id="fixedList"></div>
     <div class="mac"><button class="btn bp" onclick="closeMod('fixedMod')">Done</button></div>
   </div>
 </div>
-
-<!-- AUTO MODAL -->
 <div class="mov" id="autoMod">
-  <div class="modal">
-    <h3>⚡ Auto-Generate Roster</h3>
-    <div class="minfo">
-      · Fixed days off always respected<br>
-      · Never exceeds dept maximum (6/6, 7/7 etc)<br>
-      · Key roles filled first (SM, CH, MO, MX)<br>
-      · Staff get 4–6 days depending on holidays<br>
-      · Short depts borrow from swap pool<br><br>
-      ⚠ Overwrites non-fixed shifts for this week.
-    </div>
-    <div class="mac">
-      <button class="btn bp" onclick="autoGen()">Generate</button>
-      <button class="btn bs" onclick="closeMod('autoMod')">Cancel</button>
-    </div>
+  <div class="modal"><h3>Auto-Generate Roster</h3>
+    <div class="minfo">Fixed days respected. Never exceeds max. Key roles first. Flex staff cover short depts. No double counting. Overwrites non-fixed shifts this week.</div>
+    <div class="mac"><button class="btn bp" onclick="autoGen()">Generate</button><button class="btn bs" onclick="closeMod('autoMod')">Cancel</button></div>
   </div>
 </div>
-
-<!-- HOLIDAY MODAL -->
 <div class="mov" id="holMod">
-  <div class="modal">
-    <h3>🌴 Holiday Request</h3>
+  <div class="modal"><h3>Holiday Request</h3>
     <div class="fg"><label>Staff Member</label><select id="holStaff"></select></div>
     <div class="fg"><label>From</label><input type="date" id="holFrom"></div>
     <div class="fg"><label>To</label><input type="date" id="holTo"></div>
-    <div class="mac">
-      <button class="btn bp" onclick="submitHol()">Submit</button>
-      <button class="btn bs" onclick="closeMod('holMod')">Cancel</button>
+    <div class="fg"><label>Type</label>
+      <select id="holType">
+        <option value="full">Full Day (8 hours each)</option>
+        <option value="half">Half Day (4 hours each)</option>
+      </select>
     </div>
+    <div class="minfo" id="holCost"></div>
+    <div class="mac"><button class="btn bp" onclick="submitHol()">Submit</button><button class="btn bs" onclick="closeMod('holMod')">Cancel</button></div>
   </div>
 </div>
-
-<!-- STAFF MODAL -->
 <div class="mov" id="staffMod">
-  <div class="modal">
-    <h3>👤 Add Staff</h3>
+  <div class="modal"><h3>Add Staff</h3>
     <div class="fg"><label>Full Name</label><input type="text" id="sName" placeholder="e.g. John Murphy"></div>
     <div class="fg"><label>Role</label>
-      <select id="sRole">
-        <option value="ST">Standard Staff</option><option value="CH">Charge Hand</option>
-        <option value="MO">Machine Operator</option><option value="MX">Mixer Man</option>
-        <option value="SM">Shift Manager</option>
-      </select>
+      <select id="sRole"><option value="ST">Standard Staff</option><option value="CH">Charge Hand</option><option value="MO">Machine Operator</option><option value="MX">Mixer Man</option><option value="SM">Shift Manager</option></select>
     </div>
     <div class="fg"><label>Department</label>
-      <select id="sDept">
-        <option value="BP_DP">Big Plant DP</option><option value="BP_NP">Big Plant NP</option>
-        <option value="SL_DS">Slicing DS</option><option value="SL_NS">Slicing NS</option>
-        <option value="TH_TP">Thins Plant TP</option><option value="TH_TS">Thins Slicing TS</option>
-      </select>
+      <select id="sDept"><option value="BP_DP">Big Plant DP</option><option value="BP_NP">Big Plant NP</option><option value="SL_DS">Slicing DS</option><option value="SL_NS">Slicing NS</option><option value="TH_TP">Thins Plant TP</option><option value="TH_TS">Thins Slicing TS</option></select>
     </div>
-    <div class="mac">
-      <button class="btn bp" onclick="addStaff()">Add</button>
-      <button class="btn bs" onclick="closeMod('staffMod')">Cancel</button>
-    </div>
+    <div class="fg"><label>PIN</label><input type="text" id="sPin" placeholder="e.g. 1058" maxlength="6" inputmode="numeric"></div>
+    <div class="fg"><label>Holiday Hours (default 160)</label><input type="number" id="sHolHours" value="160" min="0" max="400"></div>
+    <div class="mac"><button class="btn bp" onclick="addStaff()">Add</button><button class="btn bs" onclick="closeMod('staffMod')">Cancel</button></div>
+  </div>
+</div>
+<div class="mov" id="editHolMod">
+  <div class="modal"><h3>Edit Holiday Balance</h3>
+    <div class="minfo" id="editHolInfo"></div>
+    <div class="fg"><label>Total Allowance (hours)</label><input type="number" id="ehAllowance" min="0" max="400"></div>
+    <div class="fg"><label>Hours Used</label><input type="number" id="ehUsed" min="0" max="400"></div>
+    <div class="mac"><button class="btn bp" onclick="saveHolEdit()">Save</button><button class="btn bs" onclick="closeMod('editHolMod')">Cancel</button></div>
   </div>
 </div>
 
 <script>
-// ══════════════════════════════════════════
-// !! REPLACE THESE WITH YOUR SUPABASE DETAILS
-// ══════════════════════════════════════════
-const SUPABASE_URL = 'https://gutnahzjrokmyuhtrevr.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1dG5haHpqcm9rbXl1aHRyZXZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5MDA2NTgsImV4cCI6MjA5NTQ3NjY1OH0.HjTzaYEHgCOEKWXt-Gs223rAftiR9bDjUtba1YtvNhE';
-const MANAGER_PASS = 'Youcef123';
-// ══════════════════════════════════════════
-
-const DCFG = {
-  BP_DP:{name:'Big Plant DP',   color:'#f5c842',min:6,max:6,workDays:[0,1,2,3,4,5,6],roles:{SM:1,CH:1,MO:1,ST:3},swapPool:['SL_DS','TH_TP']},
-  BP_NP:{name:'Big Plant NP',   color:'#5b9cf6',min:5,max:5,workDays:[0,1,2,3,4,5,6],roles:{SM:1,CH:1,MO:1,ST:2},swapPool:['SL_NS','TH_TS']},
-  SL_DS:{name:'Slicing DS',     color:'#3dba7a',min:7,max:7,workDays:[0,1,2,3,4,5,6],roles:{CH:1,MO:2,ST:4},     swapPool:['BP_DP','TH_TP']},
-  SL_NS:{name:'Slicing NS',     color:'#9b72cf',min:7,max:7,workDays:[0,1,2,3,4,5,6],roles:{CH:1,MO:2,ST:4},     swapPool:['BP_NP','TH_TS']},
-  TH_TP:{name:'Thins Plant TP', color:'#e07b3f',min:6,max:6,workDays:[0,1,2,3,4,5],  roles:{CH:1,MX:1,ST:4},     swapPool:['SL_DS','BP_DP']},
-  TH_TS:{name:'Thins Slicing TS',color:'#e05252',min:6,max:6,workDays:[0,1,2,3,4,5], roles:{CH:1,ST:5},           swapPool:['SL_NS','BP_NP']},
+const SB_URL='https://gutnahzjrokmyuhtrevr.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd1dG5haHpqcm9rbXl1aHRyZXZyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5MDA2NTgsImV4cCI6MjA5NTQ3NjY1OH0.HjTzaYEHgCOEKWXt-Gs223rAftiR9bDjUtba1YtvNhE';
+const DCFG={
+  BP_DP:{name:'Big Plant DP',color:'#f5c842',min:6,max:6,workDays:[0,1,2,3,4,5,6],roles:{SM:1,CH:1,MO:1,ST:3},swapPool:['SL_DS','TH_TP']},
+  BP_NP:{name:'Big Plant NP',color:'#5b9cf6',min:5,max:5,workDays:[0,1,2,3,4,5,6],roles:{SM:1,CH:1,MO:1,ST:2},swapPool:['SL_NS','TH_TS']},
+  SL_DS:{name:'Slicing DS',color:'#3dba7a',min:7,max:7,workDays:[0,1,2,3,4,5,6],roles:{CH:1,MO:2,ST:4},swapPool:['BP_DP','TH_TP']},
+  SL_NS:{name:'Slicing NS',color:'#9b72cf',min:7,max:7,workDays:[0,1,2,3,4,5,6],roles:{CH:1,MO:2,ST:4},swapPool:['BP_NP','TH_TS']},
+  TH_TP:{name:'Thins Plant TP',color:'#e07b3f',min:6,max:6,workDays:[0,1,2,3,4,5],roles:{CH:1,MX:1,ST:4},swapPool:['SL_DS','BP_DP']},
+  TH_TS:{name:'Thins Slicing TS',color:'#e05252',min:6,max:6,workDays:[0,1,2,3,4,5],roles:{CH:1,ST:5},swapPool:['SL_NS','BP_NP']},
 };
 const DORDER=['BP_DP','BP_NP','SL_DS','SL_NS','TH_TP','TH_TS'];
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -533,611 +431,533 @@ const RORDER=['SM','CH','MO','MX','ST'];
 const SHIFTS=[
   {v:'IN',l:'in',t:'Day Shift'},{v:'inSH',l:'inSH',t:'Shift Mgr'},
   {v:'inE',l:'inE',t:'Early'},{v:'InL',l:'InL',t:'Late'},
-  {v:'dp',l:'dp',t:'Day Plant'},{v:'HALF',l:'½day',t:'Half Day'},
-  {v:'INTR',l:'intr',t:'Training'},{v:'HOL',l:'HOL',t:'Holiday'},
-  {v:'OFF',l:'off',t:'Day Off'},
+  {v:'dp',l:'dp',t:'Day Plant'},{v:'HALF',l:'half',t:'Half Day'},
+  {v:'INTR',l:'intr',t:'Training'},{v:'HOL',l:'HOL',t:'Holiday'},{v:'OFF',l:'off',t:'Day Off'},
 ];
 const AVC=['#f5c842','#5b9cf6','#3dba7a','#9b72cf','#e07b3f','#e05252','#40c4c4'];
+const HOL_PD=8,DEF_HOL=160;
 
-// ── STATE ──
 let sbClient=null;
-let staff=[], holidays=[], roster={}, fixedDays={};
-let weekDates=[];
-let currentUser=null; // {id, name, role, dept, pin, isManager}
-let isManager=false;
-let shiftCtx=null, selShift=null;
-let fixedDeptFilter='BP_DP';
+let staff=[],holidays=[],roster={},fixedDays={},flexStaff={},coverAssignments={};
+let weekDates=[],currentUser=null,isManager=false;
+let shiftCtx=null,selShift=null,fixedDeptFilter='BP_DP';
+let loginAttempts=0,loginLocked=false,editHolTarget=null;
 
-// ── INIT ──
 async function init(){
-  if(SUPABASE_URL==='YOUR_SUPABASE_URL'){
-    // No Supabase yet — run fully offline with localStorage
-    loadLocal();
-    document.getElementById('setupScreen').style.display='flex';
-    populateStaffDropdown();
-    return;
-  }
-  // Load Supabase library dynamically to avoid naming conflicts
-  await new Promise((res,rej)=>{
-    const s=document.createElement('script');
-    s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-    s.onload=res; s.onerror=rej;
-    document.head.appendChild(s);
-  });
-  try{
-    sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-    await loadFromSupabase();
-  }catch(e){
-    loadLocal();
-  }
-  document.getElementById('loginScreen').style.display='flex';
-  populateStaffDropdown();
+  await new Promise(res=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';s.onload=res;s.onerror=res;document.head.appendChild(s);});
+  try{sbClient=window.supabase.createClient(SB_URL,SB_KEY);await loadData();}
+  catch(e){loadLocal();}
+  populateDropdown();
 }
 
-// ── LOCAL STORAGE FALLBACK ──
+async function loadData(){
+  try{
+    const[sr,hr,rr,fr,fxr]=await Promise.all([
+      sbClient.from('staff').select('id,name,role,dept,hol_left,hol_hours,hol_used').order('id'),
+      sbClient.from('holidays').select('*'),
+      sbClient.from('roster').select('*'),
+      sbClient.from('fixed_days').select('*'),
+      sbClient.from('flex_staff').select('*').catch(()=>({data:[]})),
+    ]);
+    staff=(sr.data||[]).map(s=>({...s,hol_hours:s.hol_hours||DEF_HOL,hol_used:s.hol_used||0}));
+    holidays=(hr.data||[]).map(h=>({id:h.id,staffId:h.staff_id,from_date:h.from_date,to_date:h.to_date,status:h.status,hours:h.hours||8,hol_type:h.hol_type||'full'}));
+    roster={};(rr.data||[]).forEach(r=>{roster[r.key]=r.shift;});
+    fixedDays={};(fr.data||[]).forEach(f=>{fixedDays[String(f.staff_id)]=f.days;});
+    flexStaff={};(fxr.data||[]).forEach(f=>{flexStaff[String(f.staff_id)]={coverDepts:f.cover_depts||[],isFlex:f.is_flex!==false};});
+    coverAssignments=JSON.parse(localStorage.getItem('bk_cover')||'{}');
+    saveLocal();
+  }catch(e){console.error(e);loadLocal();}
+}
 function loadLocal(){
-  staff=JSON.parse(localStorage.getItem('bk_staff')||'null')||defaultStaff();
+  staff=JSON.parse(localStorage.getItem('bk_staff')||'[]').map(s=>({...s,hol_hours:s.hol_hours||DEF_HOL,hol_used:s.hol_used||0}));
   holidays=JSON.parse(localStorage.getItem('bk_hols')||'[]');
   roster=JSON.parse(localStorage.getItem('bk_roster')||'{}');
   fixedDays=JSON.parse(localStorage.getItem('bk_fixed')||'{}');
+  flexStaff=JSON.parse(localStorage.getItem('bk_flex')||'{}');
+  coverAssignments=JSON.parse(localStorage.getItem('bk_cover')||'{}');
 }
 function saveLocal(){
   localStorage.setItem('bk_staff',JSON.stringify(staff));
   localStorage.setItem('bk_hols',JSON.stringify(holidays));
   localStorage.setItem('bk_roster',JSON.stringify(roster));
   localStorage.setItem('bk_fixed',JSON.stringify(fixedDays));
+  localStorage.setItem('bk_flex',JSON.stringify(flexStaff));
+  localStorage.setItem('bk_cover',JSON.stringify(coverAssignments));
 }
-
-// ── SUPABASE ──
-async function loadFromSupabase(){
-  document.getElementById('loginScreen').style.display='flex';
+async function pushDB(){
+  if(!sbClient||!isManager)return;
   try{
-    const[s,h,r,f]=await Promise.all([
-      sbClient.from('staff').select('*').order('id'),
-      sbClient.from('holidays').select('*'),
-      sbClient.from('roster').select('*'),
-      sbClient.from('fixed_days').select('*'),
-    ]);
-    staff=s.data&&s.data.length?s.data:defaultStaff();
-    holidays=h.data||[];
-    roster={};
-    (r.data||[]).forEach(row=>{roster[row.key]=row.shift;});
-    fixedDays={};
-    (f.data||[]).forEach(row=>{fixedDays[String(row.staff_id)]=row.days;});
-    saveLocal();
-  }catch(e){
-    loadLocal();
-  }
-  populateStaffDropdown();
-}
-
-async function saveToSupabase(){
-  if(!sbClient) return saveLocal();
-  try{
-    // Upsert roster rows
-    const rows=Object.entries(roster).map(([key,shift])=>({key,shift}));
-    if(rows.length) await sbClient.from('roster').upsert(rows,{onConflict:'key'});
-    // Upsert staff
-    await sbClient.from('staff').upsert(staff,{onConflict:'id'});
-    // Upsert holidays
-    await sbClient.from('holidays').upsert(holidays,{onConflict:'id'});
-    // Upsert fixed days
+    const rRows=Object.entries(roster).map(([key,shift])=>({key,shift}));
+    for(let i=0;i<rRows.length;i+=500) await sbClient.from('roster').upsert(rRows.slice(i,i+500),{onConflict:'key'});
+    for(const s of staff) await sbClient.from('staff').update({hol_left:s.hol_left,hol_hours:s.hol_hours,hol_used:s.hol_used}).eq('id',s.id);
     const fRows=Object.entries(fixedDays).map(([sid,days])=>({staff_id:parseInt(sid),days}));
     if(fRows.length) await sbClient.from('fixed_days').upsert(fRows,{onConflict:'staff_id'});
+    const fxRows=Object.entries(flexStaff).map(([sid,v])=>({staff_id:parseInt(sid),cover_depts:v.coverDepts,is_flex:v.isFlex}));
+    if(fxRows.length) await sbClient.from('flex_staff').upsert(fxRows,{onConflict:'staff_id'}).catch(()=>{});
     saveLocal();
-  }catch(e){
-    saveLocal();
-    toast('Saved locally (Supabase error)','warn');
-    return;
-  }
+  }catch(e){console.error(e);saveLocal();}
 }
 
-// ── LOGIN ──
-function switchLoginTab(type,el){
-  document.querySelectorAll('.ltab').forEach(x=>x.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('staffLogin').style.display=type==='staff'?'block':'none';
-  document.getElementById('managerLogin').style.display=type==='manager'?'block':'none';
+function holLeft(s){return(s.hol_hours||DEF_HOL)-(s.hol_used||0);}
+function holStr(s){const h=holLeft(s),d=Math.floor(h/HOL_PD),r=h%HOL_PD;return r>0?d+'d '+r+'h':d+'d';}
+
+function switchTab(t,el){
+  document.querySelectorAll('.ltab').forEach(x=>x.classList.remove('active'));el.classList.add('active');
+  document.getElementById('staffLogin').style.display=t==='staff'?'block':'none';
+  document.getElementById('managerLogin').style.display=t==='manager'?'block':'none';
   document.getElementById('loginErr').textContent='';
 }
-
-function populateStaffDropdown(){
+function populateDropdown(){
   const sel=document.getElementById('staffNameSel');
   sel.innerHTML='<option value="">— select your name —</option>'+
-    staff.sort((a,b)=>a.name.localeCompare(b.name))
-      .map(s=>`<option value="${s.id}">${s.name}</option>`).join('');
+    [...staff].sort((a,b)=>a.name.localeCompare(b.name)).map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
 }
-
-function staffLogin(){
+async function staffLogin(){
+  if(loginLocked){setErr('Too many attempts. Wait 1 minute.');return;}
   const sid=parseInt(document.getElementById('staffNameSel').value);
   const pin=document.getElementById('staffPin').value.trim();
-  const err=document.getElementById('loginErr');
-  if(!sid){err.textContent='Please select your name';return;}
-  if(!pin){err.textContent='Please enter your PIN';return;}
-  const s=staff.find(x=>x.id===sid);
-  if(!s||String(s.pin)!==String(pin)){
-    err.textContent='Incorrect PIN. Please try again.';
-    document.getElementById('staffPin').value='';
-    return;
-  }
-  currentUser={...s,isManager:false};
-  isManager=false;
-  enterApp();
+  if(!sid){setErr('Please select your name');return;}
+  if(!pin){setErr('Please enter your PIN');return;}
+  setBtn('staffLoginBtn',true,'Checking...');
+  try{
+    const{data,error}=await sbClient.rpc('verify_staff_pin',{p_staff_id:sid,p_pin:pin});
+    if(error||!data||!data.success){
+      loginAttempts++;
+      if(loginAttempts>=5){loginLocked=true;setTimeout(()=>{loginLocked=false;loginAttempts=0;},60000);setErr('Locked 1 min');}
+      else setErr('Wrong PIN — '+(5-loginAttempts)+' tries left');
+      document.getElementById('staffPin').value='';
+      setBtn('staffLoginBtn',false,'View My Roster');return;
+    }
+    loginAttempts=0;
+    const ls=staff.find(x=>x.id===sid);
+    currentUser={...data,hol_hours:ls?.hol_hours||DEF_HOL,hol_used:ls?.hol_used||0,isManager:false};
+    isManager=false;enterApp();
+  }catch(e){setErr('Connection error');setBtn('staffLoginBtn',false,'View My Roster');}
 }
-
-function managerLogin(){
+async function managerLogin(){
+  const email=document.getElementById('mgrEmail').value.trim();
   const pass=document.getElementById('mgrPass').value;
-  const err=document.getElementById('loginErr');
-  if(pass!==MANAGER_PASS){err.textContent='Incorrect password';document.getElementById('mgrPass').value='';return;}
-  currentUser={id:0,name:'Manager',isManager:true};
-  isManager=true;
-  enterApp();
+  if(!email||!pass){setErr('Enter email and password');return;}
+  setBtn('mgrLoginBtn',true,'Logging in...');
+  try{
+    const{data,error}=await sbClient.auth.signInWithPassword({email,password:pass});
+    if(error||!data.user){setErr('Wrong email or password');setBtn('mgrLoginBtn',false,'Manager Login');return;}
+    currentUser={id:0,name:'Manager',isManager:true};isManager=true;enterApp();
+  }catch(e){setErr('Login failed');setBtn('mgrLoginBtn',false,'Manager Login');}
 }
-
+function setErr(m){document.getElementById('loginErr').textContent=m;}
+function setBtn(id,dis,txt){const b=document.getElementById(id);b.disabled=dis;b.innerHTML=dis?'<span class="spin"></span>'+txt:txt;}
 function enterApp(){
   document.getElementById('loginScreen').style.display='none';
   document.getElementById('appScreen').style.display='block';
   document.getElementById('bottomNav').classList.add('visible');
-  document.getElementById('userPill').innerHTML=isManager
-    ?'🔑 <b>Manager</b>'
-    :`👤 <b>${currentUser.name}</b>`;
+  document.getElementById('userPill').innerHTML=isManager?'Manager':'<b>'+currentUser.name+'</b>';
   document.getElementById('mgrActions').style.display=isManager?'flex':'none';
-  document.getElementById('bnStaff').style.display=isManager?'flex':'none';
-  document.getElementById('printBtn').style.display=isManager?'flex':'none';
-  document.getElementById('rosterSub').textContent=isManager
-    ?'Click any shift to edit · 🟣 = fixed days off'
-    :'Your shifts are highlighted · Read only';
+  ['bnStaff','bnSettings','printBtn'].forEach(id=>document.getElementById(id).style.display=isManager?'flex':'none');
+  document.getElementById('rosterSub').textContent=isManager?'Click shift to edit':'Your week highlighted';
   initWeek();
 }
-
-function logout(){
-  currentUser=null; isManager=false;
+async function logout(){
+  if(isManager&&sbClient)await sbClient.auth.signOut().catch(()=>{});
+  currentUser=null;isManager=false;
   document.getElementById('appScreen').style.display='none';
   document.getElementById('bottomNav').classList.remove('visible');
   document.getElementById('loginScreen').style.display='flex';
-  document.getElementById('loginErr').textContent='';
-  document.getElementById('staffPin').value='';
-  document.getElementById('mgrPass').value='';
+  setErr('');document.getElementById('staffPin').value='';document.getElementById('mgrPass').value='';
+  setBtn('staffLoginBtn',false,'View My Roster');setBtn('mgrLoginBtn',false,'Manager Login');
 }
 
-// ── UTILS ──
-function dstr(d){return d.toISOString().split('T')[0]}
-function fmtd(d){return d.toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit'})}
-function rk(sid,date){return `${sid}_${date}`}
-function todayStr(){return dstr(new Date())}
-function isProd(did,d){return DCFG[did].workDays.includes(d.getDay())}
-function isHolDay(sid,d){
-  const s=dstr(d);
-  return holidays.some(h=>h.staffId===sid&&h.status==='approved'&&s>=h.from&&s<=h.to);
-}
-function hasFixed(sid){const f=fixedDays[String(sid)];return !!(f&&f.length)}
-function isFixedOff(sid,d){const f=fixedDays[String(sid)];return !!(f&&f.includes(d.getDay()))}
-function isWorking(s){return !['OFF','HOL','HALF','INTR','NA'].includes(s)}
-function slbl(s){return{IN:'in',inSH:'inSH',inE:'inE',InL:'InL',OFF:'off',HOL:'HOL',dp:'dp',HALF:'½day',INTR:'intr',NA:'—'}[s]||s}
-function avCol(id){return AVC[id%AVC.length]}
-function initials(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase()}
+function dstr(d){return d.toISOString().split('T')[0];}
+function fmtd(d){return d.toLocaleDateString('en-GB',{day:'2-digit',month:'2-digit'});}
+function rk(sid,date){return sid+'_'+date;}
+function todayStr(){return dstr(new Date());}
+function isProd(did,d){return DCFG[did].workDays.includes(d.getDay());}
+function isHolDay(sid,d){const s=dstr(d);return holidays.some(h=>h.staffId===sid&&h.status==='approved'&&s>=h.from_date&&s<=h.to_date);}
+function hasFixed(sid){const f=fixedDays[String(sid)];return!!(f&&f.length);}
+function isFixedOff(sid,d){const f=fixedDays[String(sid)];return!!(f&&f.includes(d.getDay()));}
+function isWorking(s){return!['OFF','HOL','HALF','INTR','NA'].includes(s);}
+function isFlex(sid){const f=flexStaff[String(sid)];return!!(f&&f.isFlex);}
+function getCoverDepts(sid){return flexStaff[String(sid)]?.coverDepts||[];}
+function getCoverDept(sid,ds){return coverAssignments[sid+'_'+ds]||null;}
+function slbl(s){return{IN:'in',inSH:'inSH',inE:'inE',InL:'InL',OFF:'off',HOL:'HOL',dp:'dp',HALF:'half',INTR:'intr',NA:'NA'}[s]||s;}
+function avCol(id){return AVC[id%AVC.length];}
+function initials(n){return n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();}
 function getShift(sid,d,did){
-  if(!isProd(did,d)) return 'NA';
-  if(isHolDay(sid,d)) return 'HOL';
-  if(isFixedOff(sid,d)) return 'OFF';
+  if(!isProd(did,d))return'NA';
+  if(isHolDay(sid,d))return'HOL';
+  if(isFixedOff(sid,d))return'OFF';
+  const cv=getCoverDept(sid,dstr(d));
+  if(cv&&cv!==did)return'OFF';
   return roster[rk(sid,dstr(d))]||'IN';
 }
 function sStyle(s){
-  const m={
-    IN:'background:rgba(61,186,122,.15);color:#4ddd96;border-color:rgba(61,186,122,.3)',
-    inSH:'background:rgba(245,200,66,.18);color:#f5c842;border-color:rgba(245,200,66,.32)',
-    inE:'background:rgba(91,156,246,.15);color:#7eb8ff;border-color:rgba(91,156,246,.3)',
-    InL:'background:rgba(64,196,196,.15);color:#40c4c4;border-color:rgba(64,196,196,.3)',
-    dp:'background:rgba(224,123,63,.15);color:#f0a060;border-color:rgba(224,123,63,.3)',
-    HOL:'background:rgba(155,114,207,.18);color:#c0a0f0;border-color:rgba(155,114,207,.3)',
-    HALF:'background:rgba(224,123,63,.1);color:#f0a060;border-color:rgba(224,123,63,.2)',
-    INTR:'background:rgba(100,100,150,.2);color:#aab;border-color:rgba(100,100,150,.3)',
-    OFF:'background:rgba(44,44,50,.4);color:#555;border-color:rgba(44,44,50,.55)',
-    NA:'background:rgba(30,30,32,.4);color:#333;border-color:rgba(30,30,32,.5)',
-  };
+  const m={IN:'background:rgba(61,186,122,.15);color:#4ddd96;border-color:rgba(61,186,122,.3)',inSH:'background:rgba(245,200,66,.18);color:#f5c842;border-color:rgba(245,200,66,.32)',inE:'background:rgba(91,156,246,.15);color:#7eb8ff;border-color:rgba(91,156,246,.3)',InL:'background:rgba(64,196,196,.15);color:#40c4c4;border-color:rgba(64,196,196,.3)',dp:'background:rgba(224,123,63,.15);color:#f0a060;border-color:rgba(224,123,63,.3)',HOL:'background:rgba(155,114,207,.18);color:#c0a0f0;border-color:rgba(155,114,207,.3)',HALF:'background:rgba(224,123,63,.1);color:#f0a060;border-color:rgba(224,123,63,.2)',INTR:'background:rgba(100,100,150,.2);color:#aab;border-color:rgba(100,100,150,.3)',OFF:'background:rgba(44,44,50,.4);color:#555;border-color:rgba(44,44,50,.55)',NA:'background:rgba(30,30,32,.4);color:#333;border-color:rgba(30,30,32,.5)'};
   return m[s]||'';
 }
 
-// ── NAV ──
-function showPage(p,el,btnId){
+function showPage(p,el){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.bn-item').forEach(x=>x.classList.remove('active'));
-  document.getElementById('page-'+p).classList.add('active');
-  // activate the correct bottom nav button
-  const btn=btnId?document.getElementById(btnId):el;
-  if(btn) btn.classList.add('active');
-  if(p==='holidays') renderHols();
-  if(p==='staff') renderStaff();
+  document.querySelectorAll('.bni').forEach(x=>x.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');el.classList.add('active');
+  if(p==='holidays'){renderHols();renderMyHolBalance();}
+  if(p==='staff')renderStaff();
+  if(p==='settings')renderSettings();
 }
 
-// ── WEEK ──
-function initWeek(){
-  const t=new Date(); t.setDate(t.getDate()-t.getDay());
-  document.getElementById('wkInput').value=dstr(t);
-  buildRoster();
-}
-function changeWeek(d){
-  const x=new Date(document.getElementById('wkInput').value);
-  x.setDate(x.getDate()+d);
-  document.getElementById('wkInput').value=dstr(x);
-  buildRoster();
-}
+function initWeek(){const t=new Date();t.setDate(t.getDate()-t.getDay());document.getElementById('wkInput').value=dstr(t);buildRoster();}
+function changeWeek(d){const x=new Date(document.getElementById('wkInput').value);x.setDate(x.getDate()+d);document.getElementById('wkInput').value=dstr(x);buildRoster();}
 function buildRoster(){
-  const v=document.getElementById('wkInput').value; if(!v)return;
-  const s=new Date(v); weekDates=[];
+  const v=document.getElementById('wkInput').value;if(!v)return;
+  const s=new Date(v);weekDates=[];
   for(let i=0;i<7;i++){const x=new Date(s);x.setDate(s.getDate()+i);weekDates.push(x);}
-  const lbl=`${fmtd(weekDates[0])} – ${fmtd(weekDates[6])} ${weekDates[6].getFullYear()}`;
+  const lbl=fmtd(weekDates[0])+' - '+fmtd(weekDates[6])+' '+weekDates[6].getFullYear();
   document.getElementById('wkLabel').textContent=lbl;
   document.getElementById('printWk').textContent='Week: '+lbl;
-  renderMyWeek();
-  renderDepts();
-  renderAlerts();
+  renderMyWeek();renderDepts();renderAlerts();
 }
 
-// ── MY WEEK (staff view at top) ──
 function renderMyWeek(){
   const el=document.getElementById('staffMyWeek');
   if(isManager){el.innerHTML='';return;}
-  const s=currentUser, cfg=DCFG[s.dept], col=avCol(s.id), td=todayStr();
+  const s=currentUser,cfg=DCFG[s.dept],col=avCol(s.id),td=todayStr();
   const days=weekDates.map((d,i)=>{
-    const shift=getShift(s.id,d,s.dept), isToday=dstr(d)===td;
-    return `<div class="my-day${isToday?' today':''}">
-      <div class="my-dn">${DAYS[i]}</div>
-      <div class="my-dd">${fmtd(d)}</div>
-      <div class="my-ds" style="${sStyle(shift)}">${slbl(shift)}</div>
-    </div>`;
+    const shift=getShift(s.id,d,s.dept),isToday=dstr(d)===td;
+    return '<div class="my-day'+(isToday?' today':'')+'"><div class="my-dn">'+DAYS[i]+'</div><div class="my-dd">'+fmtd(d)+'</div><div class="my-ds" style="'+sStyle(shift)+'">'+slbl(shift)+'</div></div>';
   }).join('');
-  el.innerHTML=`<div class="my-week" style="margin-bottom:18px">
-    <div class="my-hdr">
-      <div class="my-av" style="background:${col};color:#000">${initials(s.name)}</div>
-      <div>
-        <div class="my-name">${s.name}</div>
-        <div class="my-meta"><span style="color:${cfg.color}">${cfg.name}</span> · <span class="rt2 r-${s.role}" style="font-size:.6rem">${ROLES[s.role]||s.role}</span> · <span style="color:${(s.holLeft||0)<2?'var(--red)':'var(--grn)'}">${s.holLeft??5} holiday days left</span></div>
-      </div>
-    </div>
-    <div class="my-days">${days}</div>
-  </div>`;
+  const hl=holLeft(s),color=hl<8?'var(--red)':hl<24?'var(--acc)':'var(--grn)';
+  el.innerHTML='<div class="my-week"><div class="my-hdr"><div class="my-av" style="background:'+col+';color:#000">'+initials(s.name)+'</div><div><div class="my-name">'+s.name+'</div><div class="my-meta"><span style="color:'+cfg?.color+'">'+cfg?.name+'</span> &middot; <span style="color:'+color+'">'+holStr(s)+' holiday left</span></div></div></div><div class="my-days">'+days+'</div></div>';
 }
 
-// ── DEPT GRID ──
 function renderDepts(){
-  const grid=document.getElementById('deptGrid'); grid.innerHTML='';
-  // For staff: only show their own dept
-  const deptsToShow=isManager?DORDER:[currentUser.dept];
-  deptsToShow.forEach(did=>{
+  const grid=document.getElementById('deptGrid');grid.innerHTML='';
+  const show=isManager?DORDER:[currentUser.dept];
+  show.forEach(did=>{
     const cfg=DCFG[did];
-    const ds=staff.filter(s=>s.dept===did).sort((a,b)=>RORDER.indexOf(a.role)-RORDER.indexOf(b.role));
-    grid.appendChild(makeDeptCard(did,cfg,ds));
+    const primary=staff.filter(s=>s.dept===did).sort((a,b)=>RORDER.indexOf(a.role)-RORDER.indexOf(b.role));
+    const covering=[];
+    if(isManager){
+      weekDates.forEach(d=>{
+        staff.forEach(s=>{
+          if(s.dept===did)return;
+          if(getCoverDept(s.id,dstr(d))===did&&!covering.find(x=>x.id===s.id))covering.push({...s,isCovering:true});
+        });
+      });
+    }
+    grid.appendChild(makeDeptCard(did,cfg,primary,covering));
   });
 }
-
-function makeDeptCard(did,cfg,dStaff){
-  const card=document.createElement('div'); card.className='dc';
-  card.innerHTML=`<div class="dh"><div class="dhl">
-    <div class="ddot" style="background:${cfg.color}"></div>
-    <div class="dn" style="color:${cfg.color}">${cfg.name}</div>
-  </div><div class="dbadge">Target ${cfg.max}/day</div></div>`;
-  const wrap=document.createElement('div'); wrap.className='rw';
-  const tbl=document.createElement('table'); tbl.className='rt';
-  let th=`<thead><tr><th class="nc">Name</th><th class="rc">Role</th>`;
+function makeDeptCard(did,cfg,dStaff,coverStaff){
+  const card=document.createElement('div');card.className='dc';
+  card.innerHTML='<div class="dh"><div class="dhl"><div class="ddot" style="background:'+cfg.color+'"></div><div class="dn" style="color:'+cfg.color+'">'+cfg.name+'</div></div><div class="dbadge">Max '+cfg.max+'/day</div></div>';
+  const wrap=document.createElement('div');wrap.className='rw';
+  const tbl=document.createElement('table');tbl.className='rt';
+  let th='<thead><tr><th class="nc">Name</th><th class="rc">Role</th>';
   weekDates.forEach((d,i)=>{
-    const prod=isProd(did,d), today=dstr(d)===todayStr();
-    th+=`<th class="${prod?'':'nop'}" style="${today?'color:var(--acc)':''}">${DAYS[i]}<br><span style="font-size:.55rem;font-weight:400">${fmtd(d)}</span></th>`;
+    const prod=isProd(did,d),today=dstr(d)===todayStr();
+    th+='<th class="'+(prod?'':'nop')+'" style="'+(today?'color:var(--acc)':'')+'">'+DAYS[i]+'<br><span style="font-size:.55rem;font-weight:400">'+fmtd(d)+'</span></th>';
   });
-  tbl.innerHTML=th+`</tr></thead>`;
+  tbl.innerHTML=th+'</tr></thead>';
   const tbody=document.createElement('tbody');
   const counts=Array(7).fill(0);
-  dStaff.forEach(s=>{
+  [...dStaff,...coverStaff].forEach(s=>{
+    const isCover=!!s.isCovering;
     const tr=document.createElement('tr');
     const isMe=!isManager&&currentUser&&s.id===currentUser.id;
-    if(isMe) tr.className='me-row';
-    const fx=hasFixed(s.id);
-    let cells=`<td class="nc">${s.name}${fx?`<span class="fixed-dot" title="Fixed days: ${(fixedDays[String(s.id)]||[]).map(d=>DAYS[d]).join(', ')}"></span>`:''}</td>
-      <td class="rc"><span class="rt2 r-${s.role}">${ROLES[s.role]||s.role}</span></td>`;
+    if(isMe)tr.className='me-row';else if(isCover)tr.className='cover-row';
+    const fx=hasFixed(s.id)&&!isCover,cv=isFlex(s.id)&&!isCover;
+    let cells='<td class="nc">'+s.name+(fx?'<span class="fx-dot"></span>':'')+(cv?'<span class="cv-dot"></span>':'')+'</td><td class="rc"><span class="rt2 r-'+s.role+'">'+ROLES[s.role]+'</span></td>';
     weekDates.forEach((d,i)=>{
-      const shift=getShift(s.id,d,did);
-      if(isWorking(shift)) counts[i]++;
-      if(shift==='NA'){
-        cells+=`<td class="nop"><span class="sc s-NA">—</span></td>`;
-      } else {
-        const editable=isManager&&!isFixedOff(s.id,d);
-        const fxOff=isFixedOff(s.id,d);
-        cells+=`<td><span class="sc s-${shift}${editable?' editable':''}${fxOff?' fixed-sc':''}"
-          ${editable?`onclick="openShiftMod(${s.id},'${dstr(d)}','${s.name.replace(/'/g,"\\'")}','${cfg.name}','${did}')"`:''}>
-          ${slbl(shift)}</span></td>`;
+      let shift;
+      if(isCover){shift=getCoverDept(s.id,dstr(d))===did?(roster[rk(s.id,dstr(d))]||'IN'):'OFF';if(!isProd(did,d))shift='NA';}
+      else shift=getShift(s.id,d,did);
+      if(isWorking(shift))counts[i]++;
+      if(shift==='NA'){cells+='<td class="nop"><span class="sc s-NA">NA</span></td>';}
+      else{
+        const ed=isManager&&!isFixedOff(s.id,d)&&!isCover;
+        cells+='<td><span class="sc s-'+shift+(ed?' ed':'')+'"'+(ed?' onclick="openShiftMod('+s.id+',''+dstr(d)+'',''+s.name.replace(/'/g,"\'")+ '',''+cfg.name+'',''+did+'')"':'')+'>'+slbl(shift)+'</span></td>';
       }
     });
-    tr.innerHTML=cells; tbody.appendChild(tr);
+    tr.innerHTML=cells;tbody.appendChild(tr);
   });
   const tfoot=document.createElement('tfoot');
-  let tot=`<tr class="tot"><td class="nc" style="color:var(--mut2);font-size:.62rem">TOTAL</td><td></td>`;
+  let tot='<tr class="tot"><td class="nc" style="color:var(--mut2);font-size:.62rem">TOTAL</td><td></td>';
   counts.forEach((c,i)=>{
     const prod=isProd(did,weekDates[i]);
-    if(!prod){tot+=`<td class="c-na">—</td>`;return;}
+    if(!prod){tot+='<td class="c-na">-</td>';return;}
     const cls=c>=cfg.max?'c-ok':c>=cfg.min-1?'c-warn':'c-low';
-    tot+=`<td class="${cls}">${c}/${cfg.max}</td>`;
+    tot+='<td class="'+cls+'">'+c+'/'+cfg.max+'</td>';
   });
-  tbl.appendChild(tbody);tbl.appendChild(tfoot);
-  tfoot.innerHTML=tot+'</tr>';
-  wrap.appendChild(tbl); card.appendChild(wrap);
-  return card;
+  tbl.appendChild(tbody);tbl.appendChild(tfoot);tfoot.innerHTML=tot+'</tr>';
+  wrap.appendChild(tbl);card.appendChild(wrap);return card;
 }
-
 function renderAlerts(){
   if(!isManager){document.getElementById('alertBar').innerHTML='';return;}
-  const bar=document.getElementById('alertBar'); bar.innerHTML='';
+  const bar=document.getElementById('alertBar');bar.innerHTML='';
   DORDER.forEach(did=>{
-    const cfg=DCFG[did], ds2=staff.filter(s=>s.dept===did);
+    const cfg=DCFG[did],ds2=staff.filter(s=>s.dept===did);
     let low=false,vlow=false;
     weekDates.forEach(d=>{
       if(!isProd(did,d))return;
-      let c=0; ds2.forEach(s=>{if(isWorking(getShift(s.id,d,did)))c++;});
+      let c=0;
+      ds2.forEach(s=>{if(isWorking(getShift(s.id,d,did)))c++;});
+      staff.forEach(s=>{if(s.dept!==did&&getCoverDept(s.id,dstr(d))===did)c++;});
       if(c<cfg.min){low=true;if(c<cfg.min-2)vlow=true;}
     });
-    const dot=vlow?'low':low?'warn':'ok', msg=vlow?'⚠ Understaffed':low?'~ Short':'✓ OK';
-    bar.innerHTML+=`<div class="ai"><div class="adot ${dot}"></div><b>${cfg.name}</b><span style="color:var(--mut2)">${msg}</span></div>`;
+    const dot=vlow?'low':low?'warn':'ok',msg=vlow?'Understaffed':low?'Short':'OK';
+    bar.innerHTML+='<div class="ai"><div class="adot '+dot+'"></div><b>'+cfg.name+'</b><span style="color:var(--mut2)">'+msg+'</span></div>';
   });
 }
 
-// ── FIXED DAYS ──
-function openFixedMod(){renderDeptFilter2();renderFixedList();document.getElementById('fixedMod').classList.add('open')}
+function openFixedMod(){renderDeptFilter2();renderFixedList();document.getElementById('fixedMod').classList.add('open');}
 function renderDeptFilter2(){
-  document.getElementById('deptFilter').innerHTML=DORDER.map(did=>
-    `<div class="dfb${fixedDeptFilter===did?' active':''}" onclick="setFixedFilter('${did}')">${DCFG[did].name}</div>`
-  ).join('');
+  document.getElementById('deptFilter').innerHTML=DORDER.map(did=>'<div class="dfb'+(fixedDeptFilter===did?' active':'')+'" onclick="setFixedFilter(''+did+'')">'+DCFG[did].name+'</div>').join('');
 }
-function setFixedFilter(did){fixedDeptFilter=did;renderDeptFilter2();renderFixedList()}
+function setFixedFilter(did){fixedDeptFilter=did;renderDeptFilter2();renderFixedList();}
 function renderFixedList(){
   const cfg=DCFG[fixedDeptFilter];
   const filtered=staff.filter(s=>s.dept===fixedDeptFilter).sort((a,b)=>RORDER.indexOf(a.role)-RORDER.indexOf(b.role));
   document.getElementById('fixedList').innerHTML=filtered.map(s=>{
-    const sid=String(s.id), fixed=fixedDays[sid]||[];
+    const sid=String(s.id),fixed=fixedDays[sid]||[];
     const btns=DAYS.map((day,i)=>{
       const noProd=!cfg.workDays.includes(i);
-      return `<div class="dbt${fixed.includes(i)?' sel':''}${noProd?' dis':''}" onclick="toggleFixed(${s.id},${i})">${day}</div>`;
+      return '<div class="dbt'+(fixed.includes(i)?' sel':'')+(noProd?' dis':'')+'" onclick="toggleFixed('+s.id+','+i+')">'+day+'</div>';
     }).join('');
-    return `<div class="sli">
-      <div class="sli-l">
-        <div class="sli-name">${s.name}</div>
-        <div class="sli-meta">${ROLES[s.role]||s.role}${fixed.length?' · Off: '+fixed.map(d=>DAYS[d]).join(', '):'· No fixed'}</div>
-      </div>
-      <div class="day-btns">${btns}</div>
-    </div>`;
+    return '<div class="sli"><div class="sli-l"><div class="sli-name">'+s.name+'</div><div class="sli-meta">'+(ROLES[s.role]||s.role)+(fixed.length?' Off: '+fixed.map(d=>DAYS[d]).join(', '):'')+'</div></div><div class="day-btns">'+btns+'</div></div>';
   }).join('');
 }
 function toggleFixed(sid,dayNum){
-  const key=String(sid);
-  if(!fixedDays[key])fixedDays[key]=[];
+  const key=String(sid);if(!fixedDays[key])fixedDays[key]=[];
   const idx=fixedDays[key].indexOf(dayNum);
-  if(idx>=0)fixedDays[key].splice(idx,1); else fixedDays[key].push(dayNum);
-  renderFixedList(); renderDepts(); renderAlerts();
+  if(idx>=0)fixedDays[key].splice(idx,1);else fixedDays[key].push(dayNum);
+  renderFixedList();renderDepts();renderAlerts();
 }
 
-// ── AUTO GENERATE ──
-function openAutoMod(){document.getElementById('autoMod').classList.add('open')}
+function renderSettings(){
+  renderFlexList();
+  document.getElementById('bhStaff').innerHTML='<option value="all">All Staff</option>'+staff.map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join('');
+  document.getElementById('haStaff').innerHTML=staff.map(s=>'<option value="'+s.id+'">'+s.name+' ('+holStr(s)+' left)</option>').join('');
+}
+function renderFlexList(){
+  document.getElementById('flexStaffList').innerHTML=staff.map(s=>{
+    const sid=String(s.id),fx=flexStaff[sid]||{coverDepts:[],isFlex:false};
+    const isOn=fx.isFlex,coverDepts=fx.coverDepts||[];
+    const deptBtns=DORDER.filter(d=>d!==s.dept).map(d=>'<div class="dept-btn'+(coverDepts.includes(d)?' sel':'')+'" onclick="toggleCoverDept('+s.id+',''+d+'')">'+DCFG[d].name+'</div>').join('');
+    return '<div class="flex-item"><div style="flex:1"><div class="flex-name">'+s.name+' <span class="rt2 r-'+s.role+'" style="font-size:.55rem">'+ROLES[s.role]+'</span></div><div class="flex-dept" style="color:'+(DCFG[s.dept]?.color||'')+'">'+DCFG[s.dept]?.name+'</div>'+(isOn?'<div class="flex-cover"><span style="font-size:.62rem;color:var(--mut2);margin-right:4px">Can cover:</span>'+deptBtns+'</div>':'')+'</div><div class="flex-toggle" onclick="toggleFlexStaff('+s.id+')"><div class="toggle-sw'+(isOn?' on':'')+'"></div><span>'+(isOn?'Flex':'Fixed')+'</span></div></div>';
+  }).join('');
+}
+function toggleFlexStaff(sid){
+  const key=String(sid);if(!flexStaff[key])flexStaff[key]={coverDepts:[],isFlex:false};
+  flexStaff[key].isFlex=!flexStaff[key].isFlex;renderFlexList();
+}
+function toggleCoverDept(sid,dept){
+  const key=String(sid);if(!flexStaff[key])flexStaff[key]={coverDepts:[],isFlex:true};
+  const idx=flexStaff[key].coverDepts.indexOf(dept);
+  if(idx>=0)flexStaff[key].coverDepts.splice(idx,1);else flexStaff[key].coverDepts.push(dept);
+  renderFlexList();
+}
+async function saveFlexSettings(){saveLocal();if(sbClient&&isManager){try{const fxRows=Object.entries(flexStaff).map(([sid,v])=>({staff_id:parseInt(sid),cover_depts:v.coverDepts,is_flex:v.isFlex}));if(fxRows.length)await sbClient.from('flex_staff').upsert(fxRows,{onConflict:'staff_id'}).catch(()=>{});}catch(e){}}toast('Flex settings saved');renderDepts();}
+async function addBankHoliday(){
+  const sid=document.getElementById('bhStaff').value;
+  const hours=parseInt(document.getElementById('bhHours').value)||8;
+  if(sid==='all'){staff.forEach(s=>{s.hol_hours=(s.hol_hours||DEF_HOL)+hours;});toast('+'+hours+'h added to all staff');}
+  else{const s=staff.find(x=>x.id===parseInt(sid));if(s){s.hol_hours=(s.hol_hours||DEF_HOL)+hours;toast('+'+hours+'h added to '+s.name);}}
+  await saveAll();renderSettings();renderStaff();
+}
+async function updateAllowance(){
+  const sid=parseInt(document.getElementById('haStaff').value);
+  const hours=parseInt(document.getElementById('haHours').value)||160;
+  const s=staff.find(x=>x.id===sid);
+  if(s){s.hol_hours=hours;toast(s.name+' allowance set to '+hours+'h');}
+  await saveAll();renderSettings();renderStaff();
+}
+
+function openAutoMod(){document.getElementById('autoMod').classList.add('open');}
 function autoGen(){
   closeMod('autoMod');
+  weekDates.forEach(d=>{staff.forEach(s=>{delete coverAssignments[s.id+'_'+dstr(d)];});});
   weekDates.forEach(d=>{staff.forEach(s=>{if(!isFixedOff(s.id,d))delete roster[rk(s.id,dstr(d))];});});
   DORDER.forEach(did=>genDept(did));
-  // Cross-dept swap for short depts
   DORDER.forEach(did=>{
     const cfg=DCFG[did];
     weekDates.forEach(d=>{
       if(!isProd(did,d))return;
       const ds2=dstr(d);
-      const working=staff.filter(s=>s.dept===did&&isWorking(getShift(s.id,d,did))).length;
+      let working=staff.filter(s=>s.dept===did&&isWorking(getShift(s.id,d,did))).length;
+      staff.forEach(s=>{if(getCoverDept(s.id,ds2)===did)working++;});
       if(working>=cfg.min)return;
-      const needed=cfg.min-working; let filled=0;
-      for(const srcDid of cfg.swapPool){
-        if(filled>=needed)break;
-        const candidates=staff.filter(s=>s.dept===srcDid&&!isFixedOff(s.id,d)&&!isHolDay(s.id,d)&&getShift(s.id,d,srcDid)==='OFF');
-        for(const c of candidates){if(filled>=needed)break;roster[rk(c.id,ds2)]='IN';filled++;}
-      }
+      const needed=cfg.min-working;let filled=0;
+      const cands=staff.filter(s=>s.dept!==did&&isFlex(s.id)&&getCoverDepts(s.id).includes(did)&&!isFixedOff(s.id,d)&&!isHolDay(s.id,d)&&!getCoverDept(s.id,ds2)&&getShift(s.id,d,s.dept)==='OFF');
+      for(const c of cands){if(filled>=needed)break;coverAssignments[c.id+'_'+ds2]=did;roster[rk(c.id,ds2)]='IN';filled++;}
     });
   });
-  saveAll();
-  renderDepts(); renderAlerts();
-  toast('✓ Roster generated');
+  saveAll();renderDepts();renderAlerts();toast('Roster generated');
 }
 function genDept(did){
   const cfg=DCFG[did];
   const dStaff=staff.filter(s=>s.dept===did).sort((a,b)=>RORDER.indexOf(a.role)-RORDER.indexOf(b.role));
   const prodDays=weekDates.filter(d=>isProd(did,d));
-  // Mark fixed/hol first
-  dStaff.forEach(s=>{
-    weekDates.forEach(d=>{
-      const k=rk(s.id,dstr(d));
-      if(!isProd(did,d)){delete roster[k];return;}
-      if(isHolDay(s.id,d)){roster[k]='HOL';return;}
-      if(isFixedOff(s.id,d)){roster[k]='OFF';return;}
-    });
-  });
+  dStaff.forEach(s=>{weekDates.forEach(d=>{
+    const k=rk(s.id,dstr(d));
+    if(!isProd(did,d)){delete roster[k];return;}
+    if(isHolDay(s.id,d)){roster[k]='HOL';return;}
+    if(isFixedOff(s.id,d)){roster[k]='OFF';return;}
+  });});
   const dayCount={};
   prodDays.forEach(d=>{
-    const ds2=dstr(d); dayCount[ds2]=0;
-    dStaff.forEach(s=>{
-      if(hasFixed(s.id)&&!isFixedOff(s.id,d)&&!isHolDay(s.id,d)){
-        roster[rk(s.id,ds2)]=s.role==='SM'?'inSH':'IN'; dayCount[ds2]++;
-      }
-    });
+    const ds2=dstr(d);dayCount[ds2]=0;
+    dStaff.forEach(s=>{if(hasFixed(s.id)&&!isFixedOff(s.id,d)&&!isHolDay(s.id,d)){roster[rk(s.id,ds2)]=s.role==='SM'?'inSH':'IN';dayCount[ds2]++;}});
   });
-  const flexStaff=dStaff.filter(s=>!hasFixed(s.id));
-  const workCount={};
-  flexStaff.forEach(s=>{workCount[s.id]=0;});
-  flexStaff.forEach(s=>{prodDays.forEach(d=>{if(isHolDay(s.id,d))workCount[s.id]++;});});
+  const flexS=dStaff.filter(s=>!hasFixed(s.id));
+  const wc={};flexS.forEach(s=>{wc[s.id]=0;});
+  flexS.forEach(s=>{prodDays.forEach(d=>{if(isHolDay(s.id,d))wc[s.id]++;});});
   prodDays.forEach(d=>{
     const ds2=dstr(d);
     const slotsLeft=()=>cfg.max-dayCount[ds2];
-    if(slotsLeft()<=0){flexStaff.forEach(s=>{if(!isHolDay(s.id,d))roster[rk(s.id,ds2)]='OFF';});return;}
-    const available=flexStaff.filter(s=>!isHolDay(s.id,d)&&!isFixedOff(s.id,d))
-      .sort((a,b)=>RORDER.indexOf(a.role)-RORDER.indexOf(b.role)||(workCount[a.id]-workCount[b.id]));
-    available.forEach(s=>{
-      const k=rk(s.id,ds2);
-      if(slotsLeft()>0&&workCount[s.id]<6){
-        roster[k]=s.role==='SM'?'inSH':'IN'; dayCount[ds2]++; workCount[s.id]++;
-      } else {roster[k]='OFF';}
-    });
+    if(slotsLeft()<=0){flexS.forEach(s=>{if(!isHolDay(s.id,d))roster[rk(s.id,ds2)]='OFF';});return;}
+    flexS.filter(s=>!isHolDay(s.id,d)&&!isFixedOff(s.id,d))
+      .sort((a,b)=>RORDER.indexOf(a.role)-RORDER.indexOf(b.role)||(wc[a.id]-wc[b.id]))
+      .forEach(s=>{
+        const k=rk(s.id,ds2);
+        if(slotsLeft()>0&&wc[s.id]<6){roster[k]=s.role==='SM'?'inSH':'IN';dayCount[ds2]++;wc[s.id]++;}
+        else roster[k]='OFF';
+      });
   });
 }
 
-// ── SHIFT MODAL ──
 function openShiftMod(sid,dateKey,name,deptName,did){
   if(!isManager)return;
-  shiftCtx={sid,dateKey,did};
-  selShift=roster[rk(sid,dateKey)]||'IN';
-  document.getElementById('shiftInfo').textContent=`${name} · ${deptName} · ${dateKey}`;
-  document.getElementById('shiftPicker').innerHTML=SHIFTS.map(sh=>
-    `<div class="spo${selShift===sh.v?' sel':''}" onclick="pickShift('${sh.v}',this)">
-      <div>${sh.l}</div><div style="font-size:.52rem;opacity:.6;margin-top:1px">${sh.t}</div>
-    </div>`).join('');
+  shiftCtx={sid,dateKey,did};selShift=roster[rk(sid,dateKey)]||'IN';
+  document.getElementById('shiftInfo').textContent=name+' - '+deptName+' - '+dateKey;
+  document.getElementById('shiftPicker').innerHTML=SHIFTS.map(sh=>'<div class="spo'+(selShift===sh.v?' sel':'')+'" onclick="pickShift(''+sh.v+'',this)"><div>'+sh.l+'</div><div style="font-size:.52rem;opacity:.6;margin-top:1px">'+sh.t+'</div></div>').join('');
   document.getElementById('shiftMod').classList.add('open');
 }
-function pickShift(v,el){selShift=v;document.querySelectorAll('.spo').forEach(x=>x.classList.remove('sel'));el.classList.add('sel')}
-function applyShift(){
-  if(!shiftCtx||!selShift)return;
-  roster[rk(shiftCtx.sid,shiftCtx.dateKey)]=selShift;
-  closeMod('shiftMod'); saveAll(); renderDepts(); renderAlerts();
-}
+function pickShift(v,el){selShift=v;document.querySelectorAll('.spo').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
+function applyShift(){if(!shiftCtx||!selShift)return;roster[rk(shiftCtx.sid,shiftCtx.dateKey)]=selShift;closeMod('shiftMod');saveAll();renderDepts();renderAlerts();}
 
-// ── HOLIDAYS ──
+function renderMyHolBalance(){
+  const el=document.getElementById('myHolBalance');
+  if(isManager){el.innerHTML='';return;}
+  const s=currentUser,total=s.hol_hours||DEF_HOL,used=s.hol_used||0,left=total-used;
+  const pct=Math.max(0,Math.min(100,(left/total)*100));
+  const color=left<8?'var(--red)':left<24?'var(--acc)':'var(--grn)';
+  el.innerHTML='<div class="hol-balance"><div class="hol-bal-item"><div class="hol-bal-num" style="color:'+color+'">'+holStr(s)+'</div><div class="hol-bal-lbl">Remaining</div></div><div class="hol-bal-item"><div class="hol-bal-num" style="color:var(--mut2)">'+Math.floor(used/8)+'d</div><div class="hol-bal-lbl">Used</div></div><div class="hol-bal-item"><div class="hol-bal-num">'+Math.floor(total/8)+'d</div><div class="hol-bal-lbl">Total</div></div><div style="flex:1;min-width:80px"><div style="font-size:.65rem;color:var(--mut2);margin-bottom:4px">Balance</div><div class="hol-track" style="width:100%;height:8px"><div class="hol-fill" style="width:'+pct+'%;background:'+color+'"></div></div></div></div>';
+}
 function openHolMod(){
   const sel=document.getElementById('holStaff');
-  if(isManager){
-    sel.innerHTML=staff.map(s=>`<option value="${s.id}">${s.name} (${DCFG[s.dept]?.name||''})</option>`).join('');
-  } else {
-    sel.innerHTML=`<option value="${currentUser.id}">${currentUser.name}</option>`;
-  }
-  document.getElementById('holMod').classList.add('open');
+  sel.innerHTML=isManager?staff.map(s=>'<option value="'+s.id+'">'+s.name+' ('+holStr(s)+' left)</option>').join(''):'<option value="'+currentUser.id+'">'+currentUser.name+' ('+holStr(currentUser)+' left)</option>';
+  updateHolCost();document.getElementById('holMod').classList.add('open');
 }
-function submitHol(){
-  const sid=parseInt(document.getElementById('holStaff').value);
-  const from=document.getElementById('holFrom').value, to=document.getElementById('holTo').value;
-  if(!from||!to){alert('Select both dates');return;}
-  if(from>to){alert('From must be before To');return;}
+function updateHolCost(){
+  const from=document.getElementById('holFrom').value,to=document.getElementById('holTo').value,type=document.getElementById('holType').value;
+  if(!from||!to)return;
   const days=Math.round((new Date(to)-new Date(from))/86400000)+1;
-  const s=staff.find(x=>x.id===sid);
-  if(s&&days>(s.holLeft||0)){if(!confirm(`Only ${s.holLeft} days left. Submit anyway?`))return;}
-  holidays.push({id:Date.now(),staffId:sid,from,to,status:'pending'});
-  saveAll(); closeMod('holMod'); renderHols(); toast('Holiday request submitted');
+  const hrs=days*(type==='half'?4:8);
+  document.getElementById('holCost').textContent='This uses '+hrs+' hours ('+days+' day'+(days>1?'s':'')+' x '+(type==='half'?4:8)+'h)';
 }
-function renderHols(){renderHolSec('pendingList','pending');renderHolSec('approvedList','approved')}
+document.getElementById('holFrom').addEventListener('change',updateHolCost);
+document.getElementById('holTo').addEventListener('change',updateHolCost);
+document.getElementById('holType').addEventListener('change',updateHolCost);
+async function submitHol(){
+  const sid=parseInt(document.getElementById('holStaff').value);
+  const from=document.getElementById('holFrom').value,to=document.getElementById('holTo').value,type=document.getElementById('holType').value;
+  if(!from||!to){alert('Select both dates');return;}if(from>to){alert('From before To');return;}
+  const days=Math.round((new Date(to)-new Date(from))/86400000)+1,hrs=days*(type==='half'?4:8);
+  const s=staff.find(x=>x.id===sid)||currentUser;
+  if(hrs>holLeft(s)){if(!confirm('Only '+holLeft(s)+'h left. Submit anyway?'))return;}
+  const nh={id:Date.now(),staffId:sid,from_date:from,to_date:to,status:'pending',hours:hrs,hol_type:type};
+  holidays.push(nh);
+  if(sbClient)try{await sbClient.from('holidays').insert([{id:nh.id,staff_id:sid,from_date:from,to_date:to,status:'pending',hours:hrs,hol_type:type}]);}catch(e){}
+  saveLocal();closeMod('holMod');renderHols();renderMyHolBalance();toast('Holiday request submitted');
+}
+function renderHols(){renderHolSec('pendingList','pending');renderHolSec('approvedList','approved');}
 function renderHolSec(elId,status){
   const el=document.getElementById(elId);
   let list=holidays.filter(h=>h.status===status);
-  if(!isManager) list=list.filter(h=>h.staffId===currentUser.id);
+  if(!isManager)list=list.filter(h=>h.staffId===currentUser.id);
   if(!list.length){el.innerHTML='<div class="empty">None</div>';return;}
   el.innerHTML=list.map(h=>{
-    const s=staff.find(x=>x.id===h.staffId), cfg=DCFG[s?.dept];
-    const days=Math.round((new Date(h.to)-new Date(h.from))/86400000)+1;
-    const acts=isManager&&status==='pending'
-      ?`<button class="btn bg bxs" onclick="approveHol(${h.id})">✓</button><button class="btn br bxs" onclick="deleteHol(${h.id})">✗</button>`
-      :isManager?`<button class="btn bs bxs" onclick="deleteHol(${h.id})">Revoke</button>`
-      :`<span class="pill pp">pending</span>`;
-    return `<div class="hi">
-      <div><div class="hin">${s?.name||'?'}</div>
-        <div class="hid">${h.from} → ${h.to} <b style="color:var(--acc)">(${days}d)</b></div>
-        <div class="hig">${cfg?.name||''}</div></div>
-      <div style="display:flex;align-items:center;gap:6px">
-        <span class="pill p${status[0]}">${status}</span>${acts}</div>
-    </div>`;
+    const s=staff.find(x=>x.id===h.staffId),cfg=DCFG[s?.dept];
+    const days=Math.round((new Date(h.to_date)-new Date(h.from_date))/86400000)+1,hrs=h.hours||(days*8);
+    const acts=isManager&&status==='pending'?'<button class="btn bg bxs" onclick="approveHol('+h.id+')">Approve</button><button class="btn br bxs" onclick="deleteHol('+h.id+')">Reject</button>':isManager?'<button class="btn bs bxs" onclick="deleteHol('+h.id+')">Revoke</button>':'<span class="pill pp">pending</span>';
+    return '<div class="hi"><div><div class="hin">'+(s?.name||'?')+'</div><div class="hid">'+h.from_date+' to '+h.to_date+' - '+hrs+'h</div><div class="hig">'+(cfg?.name||'')+'</div></div><div style="display:flex;align-items:center;gap:6px"><span class="pill p'+status[0]+'">'+status+'</span>'+acts+'</div></div>';
   }).join('');
 }
-function approveHol(id){
-  const h=holidays.find(x=>x.id===id); if(!h)return;
+async function approveHol(id){
+  const h=holidays.find(x=>x.id===id);if(!h)return;
   h.status='approved';
   const s=staff.find(x=>x.id===h.staffId);
-  const days=Math.round((new Date(h.to)-new Date(h.from))/86400000)+1;
-  if(s)s.holLeft=Math.max(0,(s.holLeft||0)-days);
-  const from=new Date(h.from),to=new Date(h.to);
+  const hrs=h.hours||(Math.round((new Date(h.to_date)-new Date(h.from_date))/86400000)+1)*8;
+  if(s)s.hol_used=(s.hol_used||0)+hrs;
+  const from=new Date(h.from_date),to=new Date(h.to_date);
   for(let d=new Date(from);d<=to;d.setDate(d.getDate()+1))roster[rk(h.staffId,dstr(new Date(d)))]='HOL';
-  saveAll(); renderHols(); renderDepts(); renderAlerts(); toast('Holiday approved');
+  if(sbClient)try{await sbClient.from('holidays').update({status:'approved'}).eq('id',id);}catch(e){}
+  await saveAll();renderHols();renderDepts();renderAlerts();toast('Holiday approved');
 }
-function deleteHol(id){holidays=holidays.filter(x=>x.id!==id);saveAll();renderHols();buildRoster()}
+async function deleteHol(id){
+  const h=holidays.find(x=>x.id===id);
+  if(h&&h.status==='approved'){const s=staff.find(x=>x.id===h.staffId);if(s)s.hol_used=Math.max(0,(s.hol_used||0)-(h.hours||8));}
+  holidays=holidays.filter(x=>x.id!==id);
+  if(sbClient)try{await sbClient.from('holidays').delete().eq('id',id);}catch(e){}
+  saveLocal();renderHols();buildRoster();
+}
 
-// ── STAFF PAGE ──
 function renderStaff(){
   document.getElementById('staffTbody').innerHTML=staff.map((s,i)=>{
-    const cfg=DCFG[s.dept], fixed=(fixedDays[String(s.id)]||[]);
-    return `<tr>
-      <td style="color:var(--mut2)">${i+1}</td>
-      <td style="font-weight:600">${s.name}${hasFixed(s.id)?`<span class="fixed-dot" style="margin-left:5px"></span>`:''}</td>
-      <td><span class="rt2 r-${s.role}">${ROLES[s.role]||s.role}</span></td>
-      <td style="color:${cfg?.color||'var(--mut2)'}">${cfg?.name||'—'}</td>
-      <td><span class="pin-badge">${s.pin||'—'}</span></td>
-      <td style="color:${fixed.length?'var(--pur)':'var(--mut)'}">${fixed.length?fixed.map(d=>DAYS[d]).join(' & '):'none'}</td>
-      <td><span style="color:${(s.holLeft||0)<2?'var(--red)':'var(--grn)'}">${s.holLeft??5} days</span></td>
-      <td><button class="btn br bxs" onclick="removeStaff(${s.id})">Remove</button></td>
-    </tr>`;
+    const cfg=DCFG[s.dept],fixed=(fixedDays[String(s.id)]||[]);
+    const total=s.hol_hours||DEF_HOL,used=s.hol_used||0,left=total-used;
+    const pct=Math.max(0,Math.min(100,(left/total)*100));
+    const color=left<8?'var(--red)':left<24?'var(--acc)':'var(--grn)';
+    const flexInfo=isFlex(s.id)?'<span style="color:var(--cyn);font-size:.6rem"> Flex</span>':'';
+    return '<tr><td style="color:var(--mut2)">'+(i+1)+'</td><td style="font-weight:600">'+s.name+flexInfo+(hasFixed(s.id)?'<span class="fx-dot" style="margin-left:4px"></span>':'')+'</td><td><span class="rt2 r-'+s.role+'">'+(ROLES[s.role]||s.role)+'</span></td><td style="color:'+(cfg?.color||'var(--mut2)')+'">'+cfg?.name+'</td><td><span class="pin-badge">'+(1000+s.id)+'</span></td><td><div class="hol-bar"><span style="color:'+color+';font-size:.72rem;font-weight:600">'+holStr(s)+'</span><div class="hol-track"><div class="hol-fill" style="width:'+pct+'%;background:'+color+'"></div></div><button class="btn bs bxs" onclick="openEditHol('+s.id+')" style="padding:2px 6px;font-size:.6rem">Edit</button></div><div style="font-size:.6rem;color:var(--mut2);margin-top:2px">'+used+'h used of '+total+'h</div></td><td style="color:'+(fixed.length?'var(--pur)':'var(--mut)')+'">'+( fixed.length?fixed.map(d=>DAYS[d]).join(' & '):'none')+'</td><td><button class="btn br bxs" onclick="removeStaff('+s.id+')">Remove</button></td></tr>';
   }).join('');
 }
-function openStaffMod(){document.getElementById('sName').value='';document.getElementById('staffMod').classList.add('open')}
-function addStaff(){
-  const name=document.getElementById('sName').value.trim(); if(!name){alert('Enter a name');return;}
-  const maxId=Math.max(0,...staff.map(s=>s.id));
-  const newId=maxId+1;
-  const pin=String(1000+newId); // auto PIN
-  staff.push({id:newId,name,role:document.getElementById('sRole').value,dept:document.getElementById('sDept').value,holLeft:5,pin});
-  saveAll(); closeMod('staffMod'); renderStaff(); populateStaffDropdown();
-  toast(`Staff added — PIN: ${pin}`);
+function openEditHol(sid){
+  const s=staff.find(x=>x.id===sid);if(!s)return;
+  editHolTarget=sid;
+  document.getElementById('editHolInfo').textContent='Editing holiday balance for '+s.name;
+  document.getElementById('ehAllowance').value=s.hol_hours||DEF_HOL;
+  document.getElementById('ehUsed').value=s.hol_used||0;
+  document.getElementById('editHolMod').classList.add('open');
 }
-function removeStaff(id){
+async function saveHolEdit(){
+  const s=staff.find(x=>x.id===editHolTarget);if(!s)return;
+  s.hol_hours=parseInt(document.getElementById('ehAllowance').value)||DEF_HOL;
+  s.hol_used=parseInt(document.getElementById('ehUsed').value)||0;
+  closeMod('editHolMod');await saveAll();renderStaff();toast(s.name+' holiday updated');
+}
+function openStaffMod(){document.getElementById('sName').value='';document.getElementById('sPin').value='';document.getElementById('staffMod').classList.add('open');}
+async function addStaff(){
+  const name=document.getElementById('sName').value.trim();if(!name){alert('Enter name');return;}
+  const pin=document.getElementById('sPin').value.trim();if(!pin){alert('Enter PIN');return;}
+  const hrs=parseInt(document.getElementById('sHolHours').value)||DEF_HOL;
+  const newId=Math.max(0,...staff.map(s=>s.id))+1;
+  const ns={id:newId,name,role:document.getElementById('sRole').value,dept:document.getElementById('sDept').value,hol_left:5,hol_hours:hrs,hol_used:0};
+  staff.push(ns);
+  if(sbClient&&isManager)try{await sbClient.from('staff').insert([{id:newId,name,role:ns.role,dept:ns.dept,hol_left:5,hol_hours:hrs,hol_used:0,pin_hash:pin}]);}catch(e){}
+  saveLocal();closeMod('staffMod');renderStaff();populateDropdown();toast('Staff added - PIN: '+pin);
+}
+async function removeStaff(id){
   if(!confirm('Remove this staff member?'))return;
-  staff=staff.filter(s=>s.id!==id); delete fixedDays[String(id)];
-  saveAll(); renderStaff(); renderDepts(); populateStaffDropdown();
+  staff=staff.filter(s=>s.id!==id);delete fixedDays[String(id)];delete flexStaff[String(id)];
+  if(sbClient&&isManager)try{await sbClient.from('staff').delete().eq('id',id);}catch(e){}
+  saveLocal();renderStaff();renderDepts();populateDropdown();
 }
 
-// ── PRINT ──
+async function saveAll(){await pushDB();toast('Saved');}
 function doPrint(){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-roster').classList.add('active');
-  document.querySelectorAll('.bn-item').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.bni').forEach(x=>x.classList.remove('active'));
   document.getElementById('bnRoster').classList.add('active');
-  setTimeout(()=>window.print(),150);
+  setTimeout(()=>window.print(),200);
 }
-
-// ── SAVE ──
-async function saveAll(){
-  await saveToSupabase();
-  toast('Saved ✓');
-}
-
-// ── MODAL ──
-function closeMod(id){document.getElementById(id).classList.remove('open')}
-document.querySelectorAll('.mov').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')})})
-function toast(msg,type='ok'){
+function closeMod(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.mov').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+function toast(msg){
   const t=document.createElement('div');
-  const bg=type==='warn'?'var(--acc)':'var(--grn)';
-  t.style.cssText=`position:fixed;bottom:20px;right:20px;background:${bg};color:#000;padding:10px 16px;border-radius:7px;font-family:var(--fb);font-size:.75rem;font-weight:700;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.4)`;
-  t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2800);
+  t.style.cssText='position:fixed;bottom:70px;right:16px;background:var(--grn);color:#000;padding:10px 15px;border-radius:7px;font-family:var(--fb);font-size:.75rem;font-weight:700;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.4)';
+  t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2800);
 }
-
-// ── DEFAULT STAFF WITH PINS ──
-function defaultStaff(){
-  const raw=[
-    [1,'Dave Harding','SM','BP_DP'],[2,'Mark Fegan','CH','BP_DP'],[3,'Daniel Kotecki','MO','BP_DP'],
-    [4,'Bilal Amour','ST','BP_DP'],[5,'Jean Bife','ST','BP_DP'],[6,'Cesar Banuls','ST','BP_DP'],
-    [7,'Ali Anter','ST','BP_DP'],[8,'Ahmed Esseghir','ST','BP_DP'],[9,'Tahir','ST','BP_DP'],[10,'Philip Keogh','ST','BP_DP'],
-    [11,'Bobby Stevens','SM','BP_NP'],[12,'Niall O\'Connel','CH','BP_NP'],[13,'Przemek Glab','MO','BP_NP'],
-    [14,'Tomas Skrzyniarz','ST','BP_NP'],[15,'Darko Marasovic','ST','BP_NP'],[16,'Zak Chaib','ST','BP_NP'],
-    [17,'Eduard Dolhov','ST','BP_NP'],[18,'Abdikarim','ST','BP_NP'],
-    [19,'Mark Byrne','CH','SL_DS'],[20,'Dave Lawlor','MO','SL_DS'],[21,'Piotr Falfus','MO','SL_DS'],
-    [22,'Billy Carpenter','ST','SL_DS'],[23,'Wayne Royle','ST','SL_DS'],[24,'Dermot Oneil','ST','SL_DS'],
-    [25,'Kieran Marshall','ST','SL_DS'],[26,'Malek Dawood','ST','SL_DS'],[27,'Luis Martinez','ST','SL_DS'],
-    [28,'Kevin Tuartainze','ST','SL_DS'],[29,'Jocelyn Sangua','ST','SL_DS'],[30,'Allan Agwa','ST','SL_DS'],
-    [31,'Piotr Baranowski','CH','SL_NS'],[32,'John Carberry','MO','SL_NS'],[33,'Alan Walsh','MO','SL_NS'],
-    [34,'Gary Savage','ST','SL_NS'],[35,'Mariusz Suwala','ST','SL_NS'],[36,'Rolandas Kantuaskas','ST','SL_NS'],
-    [37,'Maciej Grzeczny','ST','SL_NS'],[38,'Mohammed Boushaki','ST','SL_NS'],[39,'Hassan Attawi','ST','SL_NS'],
-    [40,'Abdikarim NS','ST','SL_NS'],
-    [41,'Youcuf Kada','CH','TH_TP'],[42,'Philip Keogh TP','MX','TH_TP'],[43,'Mohamed Baouni','ST','TH_TP'],
-    [44,'Mohammed Figue','ST','TH_TP'],[45,'Pawel Cybulski','ST','TH_TP'],[46,'Lucas','ST','TH_TP'],
-    [47,'Sreekanth Nair','ST','TH_TP'],[48,'Abdirahman Noor','ST','TH_TP'],
-    [49,'Zedenek Blazek','ST','TH_TS'],[50,'Anica Bosnjak','ST','TH_TS'],[51,'Maria Boly','ST','TH_TS'],
-    [52,'Thais de Silva','CH','TH_TS'],[53,'Arti Vira','ST','TH_TS'],[54,'Camilie da Cruz','ST','TH_TS'],
-    [55,'Dipika','ST','TH_TS'],[56,'Aurthar Paul','ST','TH_TS'],[57,'Allan Agwa TS','ST','TH_TS'],
-  ];
-  return raw.map(([id,name,role,dept])=>({id,name,role,dept,holLeft:5,pin:String(1000+id)}));
-}
-
 init();
 </script>
 </body>
